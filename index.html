@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Zhita Store - Top Up & Gamepass</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-main: #f0f8ff;
+        --bg-card: #ffffff;
+        --primary: #ff6b6b;
+        --secondary: #4ecdc4;
+        --accent: #ffe66d;
+        --text-dark: #2d3436;
+        --text-muted: #636e72;
+        --btn-plus: #2ed573;
+        --btn-minus: #ff4757;
+      }
+
+      * {
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: "Nunito", sans-serif;
+        background-color: var(--bg-main);
+        color: var(--text-dark);
+        margin: 0;
+        padding: 0;
+        padding-bottom: 120px;
+        background-image:
+          radial-gradient(#4ecdc4 1.5px, transparent 1.5px),
+          radial-gradient(#4ecdc4 1.5px, transparent 1.5px);
+        background-size: 30px 30px;
+        background-position:
+          0 0,
+          15px 15px;
+        background-attachment: fixed;
+      }
+
+      /* HEADER SECTION */
+      .hero {
+        position: relative;
+        text-align: center;
+        padding: 50px 20px 40px 20px;
+        background: #90eea5;
+        border-bottom: 5px solid #2ed573;
+        border-radius: 0 0 30px 30px;
+        margin-bottom: 30px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      /* Ikon Animasi Melayang */
+      .floating-icon {
+        position: absolute;
+        font-size: 3.5em;
+        opacity: 0.8;
+        filter: drop-shadow(3px 3px 0px rgba(0, 0, 0, 0.1));
+        z-index: 1;
+      }
+      .icon-1 {
+        top: 15%;
+        left: 10%;
+        animation: floatHead 4s ease-in-out infinite;
+        transform: rotate(-15deg);
+      }
+      .icon-2 {
+        bottom: 15%;
+        right: 10%;
+        animation: floatHead 5s ease-in-out infinite reverse;
+        font-size: 4em;
+        transform: rotate(20deg);
+      }
+      .icon-3 {
+        top: 15%;
+        right: 20%;
+        animation: floatHead 4.5s ease-in-out infinite 1s;
+        font-size: 2.5em;
+        transform: rotate(10deg);
+        opacity: 0.6;
+      }
+      .icon-4 {
+        bottom: 20%;
+        left: 20%;
+        animation: floatHead 6s ease-in-out infinite 0.5s;
+        font-size: 2.8em;
+        transform: rotate(-25deg);
+        opacity: 0.6;
+      }
+
+      @keyframes floatHead {
+        0% {
+          transform: translateY(0px) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-15px) rotate(5deg);
+        }
+        100% {
+          transform: translateY(0px) rotate(0deg);
+        }
+      }
+
+      /* Styling Logo */
+      .store-logo {
+        max-width: 320px;
+        width: 100%;
+        height: auto;
+        margin: 0 auto 20px auto;
+        display: block;
+        position: relative;
+        z-index: 2;
+        border-radius: 25px;
+        border: 4px solid #2d3436;
+        box-shadow: 6px 6px 0px #2d3436;
+        transition: transform 0.3s ease;
+        background-color: white;
+      }
+
+      .store-logo:hover {
+        transform: scale(1.03) rotate(-2deg);
+      }
+
+      /* Pill Subtitle */
+      .hero p {
+        color: #2d3436;
+        font-size: 1.1em;
+        font-weight: 800;
+        margin: 0;
+        background: #ffffff;
+        display: inline-block;
+        padding: 8px 25px;
+        border-radius: 30px;
+        border: 2px solid #2d3436;
+        box-shadow: 3px 3px 0px #2d3436;
+        position: relative;
+        z-index: 2;
+      }
+
+      @media (max-width: 768px) {
+        .store-logo {
+          max-width: 250px;
+        }
+        .icon-1,
+        .icon-2 {
+          font-size: 2.5em;
+        }
+        .icon-3,
+        .icon-4 {
+          display: none;
+        }
+      }
+
+      /* CONTAINER BAWAH */
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 15px;
+      }
+
+      .category-title {
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.3em;
+        color: white;
+        background: #ff6b6b;
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 20px;
+        margin: 30px 0 15px 0;
+        border: 3px solid #2d3436;
+        box-shadow: 4px 4px 0px #2d3436;
+        transform: rotate(-2deg);
+      }
+
+      .product-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      @media (min-width: 600px) {
+        .product-grid {
+          grid-template-columns: repeat(3, 1fr);
+          gap: 20px;
+        }
+      }
+
+      .card {
+        background: var(--bg-card);
+        border: 3px solid #2d3436;
+        border-radius: 20px;
+        padding: 15px;
+        text-align: center;
+        transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        position: relative;
+        box-shadow: 4px 4px 0px #2d3436;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .card:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 6px 6px 0px #2d3436;
+      }
+
+      .card-icon {
+        font-size: 3em;
+        margin-bottom: 5px;
+        display: inline-block;
+        filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.2));
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-5px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      .card-title {
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.1em;
+        color: #2d3436;
+        margin-bottom: 5px;
+      }
+
+      .card-price {
+        font-size: 1em;
+        color: #ff4757;
+        font-weight: 800;
+        margin-bottom: 15px;
+        background: #ffe66d;
+        padding: 3px 8px;
+        border-radius: 10px;
+        display: inline-block;
+        border: 2px solid #2d3436;
+      }
+
+      .controls {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #f1f2f6;
+        border-radius: 12px;
+        padding: 5px;
+        border: 2px solid #dfe4ea;
+      }
+
+      .controls button {
+        color: white;
+        border: 2px solid #2d3436;
+        width: 35px;
+        height: 35px;
+        border-radius: 10px;
+        font-size: 1.5em;
+        font-weight: bold;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: 0.1s;
+      }
+
+      .btn-min {
+        background: var(--btn-minus);
+        box-shadow: 0 3px 0 #c0392b;
+      }
+      .btn-min:active {
+        transform: translateY(3px);
+        box-shadow: none;
+      }
+
+      .btn-plus {
+        background: var(--btn-plus);
+        box-shadow: 0 3px 0 #218c53;
+      }
+      .btn-plus:active:not(:disabled) {
+        transform: translateY(3px);
+        box-shadow: none;
+      }
+
+      .controls button:disabled {
+        background: #bdc3c7;
+        box-shadow: 0 3px 0 #95a5a6;
+        cursor: not-allowed;
+        border-color: #7f8c8d;
+      }
+
+      .qty-display {
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.3em;
+        width: 30px;
+        color: #2d3436;
+      }
+
+      .account-form {
+        display: none;
+        background: #fff;
+        padding: 25px 20px;
+        border-radius: 20px;
+        border: 4px solid #2d3436;
+        margin-top: 30px;
+        box-shadow: 6px 6px 0px #4ecdc4;
+        position: relative;
+      }
+
+      .account-form::before {
+        content: "INFO PENTING! 📝";
+        position: absolute;
+        top: -15px;
+        left: 20px;
+        background: #ffe66d;
+        border: 2px solid #2d3436;
+        padding: 5px 15px;
+        border-radius: 15px;
+        font-family: "Fredoka", sans-serif;
+        font-size: 0.9em;
+        color: #2d3436;
+        box-shadow: 2px 2px 0px #2d3436;
+      }
+
+      .account-form-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+        color: #ff6b6b;
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.2em;
+      }
+
+      .account-form input {
+        width: 100%;
+        background: #f1f2f6;
+        border: 3px solid #dfe4ea;
+        color: #2d3436;
+        padding: 15px;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        font-family: "Nunito", sans-serif;
+        font-weight: 700;
+        font-size: 1em;
+        outline: none;
+        transition: 0.3s;
+      }
+
+      .account-form input:focus {
+        border-color: #4ecdc4;
+        background: white;
+        box-shadow: 4px 4px 0px #4ecdc4;
+      }
+
+      .form-note {
+        font-size: 0.9em;
+        color: #ff4757;
+        font-weight: 800;
+        margin: 0;
+        text-align: center;
+        background: #ffcccc;
+        padding: 8px;
+        border-radius: 8px;
+        border: 2px dashed #ff4757;
+      }
+
+      .bottom-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: #ffffff;
+        border-top: 4px solid #2d3436;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        z-index: 1000;
+        box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .bottom-info {
+        display: flex;
+        flex-direction: column;
+      }
+      .bottom-info small {
+        color: #636e72;
+        font-family: "Fredoka", sans-serif;
+        font-size: 0.85em;
+      }
+      .bottom-price {
+        color: #ff4757;
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.6em;
+        text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn-order {
+        background: #ffe66d;
+        color: #2d3436;
+        border: 3px solid #2d3436;
+        padding: 12px 25px;
+        border-radius: 15px;
+        font-family: "Fredoka", sans-serif;
+        font-size: 1.2em;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        box-shadow: 4px 4px 0px #2d3436;
+        transition: 0.1s;
+      }
+
+      .btn-order:active {
+        transform: translate(4px, 4px);
+        box-shadow: 0px 0px 0px #2d3436;
+      }
+
+      @media (max-width: 400px) {
+        .btn-order {
+          padding: 10px 15px;
+          font-size: 1em;
+        }
+        .bottom-price {
+          font-size: 1.3em;
+        }
+        .card-icon {
+          font-size: 2.5em;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="hero">
+      <div class="floating-icon icon-1">🎮</div>
+      <div class="floating-icon icon-2">💎</div>
+      <div class="floating-icon icon-3">🚀</div>
+      <div class="floating-icon icon-4">💸</div>
+
+      <!-- BAGIAN LOGO BARU (FORMAT PNG) -->
+      <img src="logo.png" alt="Logo Zhita Store" class="store-logo" />
+
+      <p>✨ Top Up Termurah & Tercepat! ✨</p>
+    </div>
+
+    <div class="container">
+      <div class="category-title">💎 ROBUX LOGIN</div>
+      <div class="product-grid" id="robux-container"></div>
+
+      <div class="category-title">💵 UANG DDS</div>
+      <div class="product-grid" id="uang-container"></div>
+
+      <div class="category-title">🎮 GAMEPASS DDS (Maks 1)</div>
+      <div class="product-grid" id="gamepass-container"></div>
+
+      <div class="account-form" id="account-section">
+        <div class="account-form-header">
+          <span id="form-title">Data Akun Kamu</span>
+        </div>
+        <input type="text" id="roblox-user" placeholder="Username Roblox" />
+        <input type="text" id="roblox-pass" placeholder="Password Roblox" />
+        <p class="form-note" id="form-note">
+          Matikan 2-Step Verification ya kak!
+        </p>
+      </div>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="bottom-info">
+        <small>TOTAL BELANJAAN</small>
+        <div class="bottom-price">Rp <span id="total-price">0</span></div>
+      </div>
+      <button class="btn-order" onclick="orderWhatsApp()">🛒 GAS BELI!</button>
+    </div>
+
+    <script>
+      const products = [
+        {
+          id: "rbx80",
+          cat: "robux",
+          icon: "💎",
+          isGamepass: false,
+          name: "80 Robux",
+          price: 16000,
+        },
+        {
+          id: "rbx160",
+          cat: "robux",
+          icon: "💎",
+          isGamepass: false,
+          name: "160 Robux",
+          price: 32000,
+        },
+        {
+          id: "rbx240",
+          cat: "robux",
+          icon: "💎",
+          isGamepass: false,
+          name: "240 Robux",
+          price: 48000,
+        },
+        {
+          id: "rbx320",
+          cat: "robux",
+          icon: "💎",
+          isGamepass: false,
+          name: "320 Robux",
+          price: 64000,
+        },
+        {
+          id: "rbx500",
+          cat: "robux",
+          icon: "💎",
+          isGamepass: false,
+          name: "500 Robux",
+          price: 78000,
+        },
+        {
+          id: "rbx580",
+          cat: "robux",
+          icon: "💎",
+          isGamepass: false,
+          name: "580 Robux",
+          price: 94000,
+        },
+        {
+          id: "rbx660",
+          cat: "robux",
+          icon: "💎",
+          isGamepass: false,
+          name: "660 Robux",
+          price: 110000,
+        },
+        {
+          id: "rbx740",
+          cat: "robux",
+          icon: "💎",
+          isGamepass: false,
+          name: "740 Robux",
+          price: 126000,
+        },
+        {
+          id: "rbx820",
+          cat: "robux",
+          icon: "💎",
+          isGamepass: false,
+          name: "820 Robux",
+          price: 142000,
+        },
+        {
+          id: "rbx1000",
+          cat: "robux",
+          icon: "💎",
+          isGamepass: false,
+          name: "1000 Robux",
+          price: 155000,
+        },
+
+        {
+          id: "dds500jt",
+          cat: "gp",
+          icon: "💰",
+          isGamepass: false,
+          name: "Uang 500 Juta",
+          price: 45000,
+        },
+        {
+          id: "dds100jt",
+          cat: "gp",
+          icon: "💸",
+          isGamepass: false,
+          name: "Uang 100 Juta",
+          price: 12000,
+        },
+        {
+          id: "dds50jt",
+          cat: "gp",
+          icon: "💵",
+          isGamepass: false,
+          name: "Uang 50 Juta",
+          price: 7000,
+        },
+        {
+          id: "dds10jt",
+          cat: "gp",
+          icon: "🪙",
+          isGamepass: false,
+          name: "Uang 10 Juta",
+          price: 4000,
+        },
+
+        {
+          id: "gp_pay",
+          cat: "gp",
+          icon: "🎟️",
+          isGamepass: true,
+          name: "2x Paycheck",
+          price: 50000,
+        },
+        {
+          id: "gp_pol",
+          cat: "gp",
+          icon: "🚓",
+          isGamepass: true,
+          name: "Police Pass",
+          price: 17000,
+        },
+        {
+          id: "gp_lux",
+          cat: "gp",
+          icon: "🏎️",
+          isGamepass: true,
+          name: "Luxury Pass",
+          price: 14000,
+        },
+        {
+          id: "gp_drag",
+          cat: "gp",
+          icon: "🏁",
+          isGamepass: true,
+          name: "Dragspec Pass",
+          price: 13000,
+        },
+        {
+          id: "gp_slot",
+          cat: "gp",
+          icon: "📦",
+          isGamepass: true,
+          name: "Slot Expansion",
+          price: 10000,
+        },
+        {
+          id: "gp_rims",
+          cat: "gp",
+          icon: "🛞",
+          isGamepass: true,
+          name: "Rims (Velg)",
+          price: 9000,
+        },
+        {
+          id: "gp_plat",
+          cat: "gp",
+          icon: "🏷️",
+          isGamepass: true,
+          name: "Plate (Plat)",
+          price: 9000,
+        },
+        {
+          id: "gp_acc",
+          cat: "gp",
+          icon: "✨",
+          isGamepass: true,
+          name: "Premium Accs",
+          price: 7000,
+        },
+        {
+          id: "gp_col",
+          cat: "gp",
+          icon: "🎨",
+          isGamepass: true,
+          name: "Warna Lanjutan",
+          price: 7000,
+        },
+        {
+          id: "gp_susp",
+          cat: "gp",
+          icon: "⚙️",
+          isGamepass: true,
+          name: "Suspension Pro",
+          price: 4000,
+        },
+        {
+          id: "gp_rad",
+          cat: "gp",
+          icon: "📻",
+          isGamepass: true,
+          name: "Radio",
+          price: 4000,
+        },
+      ];
+
+      function render() {
+        products.forEach((p) => {
+          let container =
+            p.cat === "robux"
+              ? "robux-container"
+              : p.name.includes("Uang")
+                ? "uang-container"
+                : "gamepass-container";
+          document.getElementById(container).innerHTML += `
+                <div class="card">
+                    <div>
+                        <div class="card-icon">${p.icon}</div>
+                        <div class="card-title">${p.name}</div>
+                        <div class="card-price">Rp ${p.price.toLocaleString("id-ID")}</div>
+                    </div>
+                    <div class="controls">
+                        <button class="btn-min" onclick="update('${p.id}', -1)" id="btn-minus-${p.id}">-</button>
+                        <div class="qty-display" id="qty-${p.id}">0</div>
+                        <button class="btn-plus" onclick="update('${p.id}', 1)" id="btn-plus-${p.id}">+</button>
+                    </div>
+                </div>`;
+        });
+      }
+      render();
+
+      let cart = {};
+      let total = 0;
+
+      function update(id, change) {
+        let p = products.find((x) => x.id === id);
+        let current = cart[id] ? cart[id].qty : 0;
+        let next = current + change;
+
+        if (next < 0) return;
+        if (p.isGamepass && next > 1) return;
+
+        if (next === 0) {
+          delete cart[id];
+        } else {
+          cart[id] = { name: p.name, qty: next, price: p.price, cat: p.cat };
+        }
+
+        document.getElementById("qty-" + id).innerText = next;
+
+        if (p.isGamepass) {
+          document.getElementById(`btn-plus-${id}`).disabled = next >= 1;
+        }
+
+        total = 0;
+        let hasRobux = false;
+        let hasGP = false;
+
+        for (let key in cart) {
+          total += cart[key].qty * cart[key].price;
+          if (cart[key].cat === "robux") hasRobux = true;
+          if (cart[key].cat === "gp") hasGP = true;
+        }
+
+        document.getElementById("total-price").innerText =
+          total.toLocaleString("id-ID");
+
+        let accountSection = document.getElementById("account-section");
+        let passInput = document.getElementById("roblox-pass");
+        let formTitle = document.getElementById("form-title");
+        let formNote = document.getElementById("form-note");
+        let userInput = document.getElementById("roblox-user");
+
+        if (hasRobux || hasGP) {
+          accountSection.style.display = "block";
+
+          if (hasRobux) {
+            passInput.style.display = "block";
+            formTitle.innerText = "🔐 Data Akun Roblox";
+            formNote.innerText =
+              "Wajib matikan 2-Step Verification (2FA) ya kak!";
+            userInput.placeholder = "Username Roblox";
+          } else {
+            passInput.style.display = "none";
+            formTitle.innerText = "🎯 Target Pengiriman";
+            formNote.innerText =
+              "Pastikan Username sudah benar (Bukan Display Name).";
+            userInput.placeholder = "Username Tujuan";
+          }
+        } else {
+          accountSection.style.display = "none";
+        }
+      }
+
+      function orderWhatsApp() {
+        if (total === 0) return alert("Pilih barangnya dulu dong! 😉");
+
+        let hasRobux = Object.values(cart).some((i) => i.cat === "robux");
+        let hasGP = Object.values(cart).some((i) => i.cat === "gp");
+
+        let rbxUser = document.getElementById("roblox-user").value.trim();
+        let rbxPass = document.getElementById("roblox-pass").value.trim();
+
+        if (hasRobux && (rbxUser === "" || rbxPass === "")) {
+          return alert(
+            "Username dan Password Roblox-nya jangan lupa diisi ya!",
+          );
+        }
+        if (!hasRobux && hasGP && rbxUser === "") {
+          return alert("Username tujuan pengirimannya diisi dulu ya!");
+        }
+
+        let numRobux = "6285837593034";
+        let numGP = "62881081022604";
+        let targetNum = "";
+
+        if (hasRobux && !hasGP) targetNum = numRobux;
+        else if (!hasRobux && hasGP) targetNum = numGP;
+        else {
+          let pilih = confirm(
+            "Orderan ada Robux & Gamepass.\n\nKlik OK -> Ke Admin Gamepass\nKlik Cancel -> Ke Admin Robux",
+          );
+          targetNum = pilih ? numGP : numRobux;
+        }
+
+        let msg = "Halo Admin *Zhita Store*, mau order dong:\n\n";
+        for (let key in cart) {
+          msg += `▸ ${cart[key].name} : ${cart[key].qty}x (Rp ${(cart[key].qty * cart[key].price).toLocaleString("id-ID")})\n`;
+        }
+
+        if (hasRobux) {
+          msg += `\n*Data Akun:*`;
+          msg += `\n👤 User: ${rbxUser}`;
+          msg += `\n🔑 Pass: ${rbxPass}\n`;
+        } else {
+          msg += `\n*Kirim Ke:*`;
+          msg += `\n👤 Username: ${rbxUser}\n`;
+        }
+
+        msg += `\n*Total: Rp ${total.toLocaleString("id-ID")}*\n\nBayarnya lewat apa nih min?`;
+
+        window.open(
+          `https://wa.me/${targetNum}?text=${encodeURIComponent(msg)}`,
+          "_blank",
+        );
+      }
+    </script>
+  </body>
+</html>
