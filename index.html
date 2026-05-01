@@ -810,16 +810,17 @@
 
         let msg = "Halo Admin *Zhita Store*, mau order dong:\n\n";
         for (let key in cart) {
-          msg += `▸ ${cart[key].name} : ${cart[key].qty}x (Rp ${(cart[key].qty * cart[key].price).toLocaleString("id-ID")})\n`;
+          // Menggunakan tanda strip (-) biasa agar tidak error di WA
+          msg += `- ${cart[key].name} : ${cart[key].qty}x (Rp ${(cart[key].qty * cart[key].price).toLocaleString("id-ID")})\n`;
         }
 
         if (hasRobux) {
           msg += `\n*Data Akun:*`;
-          msg += `\n👤 User: ${rbxUser}`;
-          msg += `\n🔑 Pass: ${rbxPass}\n`;
+          msg += `\nUsername: ${rbxUser}`;
+          msg += `\nPassword: ${rbxPass}\n`;
         } else {
           msg += `\n*Kirim Ke:*`;
-          msg += `\n👤 Username: ${rbxUser}\n`;
+          msg += `\nUsername: ${rbxUser}\n`;
         }
 
         msg += `\n*Total: Rp ${total.toLocaleString("id-ID")}*\n\nBayarnya lewat apa nih min?`;
