@@ -12,13 +12,29 @@
       :root {
         --bg-main: #f0f8ff;
         --bg-card: #ffffff;
-        --primary: #ff6b6b;
-        --secondary: #4ecdc4;
-        --accent: #ffe66d;
         --text-dark: #2d3436;
-        --text-muted: #636e72;
+        --border-color: #2d3436;
+        --shadow-color: #2d3436;
+        --hero-bg: linear-gradient(135deg, #0b0f19 0%, #1a1025 100%);
+        --tab-inactive: #ffffff;
+        --bottom-bar: #ffffff;
+        --input-bg: #f1f2f6;
+        --primary: #ff6b6b;
+        --accent: #ffe66d;
         --btn-plus: #2ed573;
         --btn-minus: #ff4757;
+      }
+
+      body.dark-mode {
+        --bg-main: #111827;
+        --bg-card: #1f2937;
+        --text-dark: #f9fafb;
+        --border-color: #000000;
+        --shadow-color: #000000;
+        --hero-bg: linear-gradient(135deg, #05080f 0%, #0d0514 100%);
+        --tab-inactive: #374151;
+        --bottom-bar: #1f2937;
+        --input-bg: #374151;
       }
 
       * {
@@ -41,140 +57,173 @@
           0 0,
           15px 15px;
         background-attachment: fixed;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
       }
 
-      /* HEADER SECTION */
+      #loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: var(--hero-bg);
+        z-index: 9999;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition:
+          opacity 0.5s ease,
+          visibility 0.5s ease;
+      }
+
+      #loader img {
+        width: 150px;
+        border-radius: 20px;
+        border: 4px solid #ffffff;
+        box-shadow: 0 0 20px rgba(138, 43, 226, 0.5);
+        animation: pulseLogo 1s infinite alternate;
+      }
+
+      @keyframes pulseLogo {
+        0% {
+          transform: scale(0.9);
+        }
+        100% {
+          transform: scale(1.1);
+        }
+      }
+
+      .dark-mode-btn {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(255, 255, 255, 0.1);
+        border: 2px solid rgba(255, 255, 255, 0.2);
+        color: white;
+        font-size: 1.2em;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        z-index: 10;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        backdrop-filter: blur(5px);
+      }
+
       .hero {
         position: relative;
         text-align: center;
-        padding: 50px 20px 40px 20px;
-        background: #90eea5;
-        border-bottom: 5px solid #2ed573;
+        padding: 60px 20px 40px 20px;
+        background: var(--hero-bg);
+        border-bottom: 5px solid #8a2be2;
         border-radius: 0 0 30px 30px;
-        margin-bottom: 30px;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        margin-bottom: 25px;
+        box-shadow: 0 10px 30px rgba(138, 43, 226, 0.3);
         overflow: hidden;
       }
 
-      /* Ikon Animasi Melayang */
-      .floating-icon {
+      .hero::before {
+        content: "";
         position: absolute;
-        font-size: 3.5em;
-        opacity: 0.8;
-        filter: drop-shadow(3px 3px 0px rgba(0, 0, 0, 0.1));
-        z-index: 1;
-      }
-      .icon-1 {
-        top: 15%;
-        left: 10%;
-        animation: floatHead 4s ease-in-out infinite;
-        transform: rotate(-15deg);
-      }
-      .icon-2 {
-        bottom: 15%;
-        right: 10%;
-        animation: floatHead 5s ease-in-out infinite reverse;
-        font-size: 4em;
-        transform: rotate(20deg);
-      }
-      .icon-3 {
-        top: 15%;
-        right: 20%;
-        animation: floatHead 4.5s ease-in-out infinite 1s;
-        font-size: 2.5em;
-        transform: rotate(10deg);
-        opacity: 0.6;
-      }
-      .icon-4 {
-        bottom: 20%;
-        left: 20%;
-        animation: floatHead 6s ease-in-out infinite 0.5s;
-        font-size: 2.8em;
-        transform: rotate(-25deg);
-        opacity: 0.6;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image:
+          radial-gradient(1px 1px at 20px 30px, #ffffff, rgba(0, 0, 0, 0)),
+          radial-gradient(2px 2px at 160px 120px, #d8b4fe, rgba(0, 0, 0, 0));
+        background-size: 200px 200px;
+        opacity: 0.3;
+        z-index: 0;
       }
 
-      @keyframes floatHead {
-        0% {
-          transform: translateY(0px) rotate(0deg);
-        }
-        50% {
-          transform: translateY(-15px) rotate(5deg);
-        }
-        100% {
-          transform: translateY(0px) rotate(0deg);
-        }
-      }
-
-      /* Styling Logo */
       .store-logo {
-        max-width: 320px;
+        max-width: 280px;
         width: 100%;
         height: auto;
         margin: 0 auto 20px auto;
         display: block;
         position: relative;
         z-index: 2;
-        border-radius: 25px;
-        border: 4px solid #2d3436;
-        box-shadow: 6px 6px 0px #2d3436;
-        transition: transform 0.3s ease;
-        background-color: white;
+        border-radius: 50%;
+        box-shadow: 0 0 40px rgba(138, 43, 226, 0.4);
       }
 
-      .store-logo:hover {
-        transform: scale(1.03) rotate(-2deg);
-      }
-
-      /* Pill Subtitle */
       .hero p {
-        color: #2d3436;
+        color: #ffffff;
         font-size: 1.1em;
         font-weight: 800;
         margin: 0;
-        background: #ffffff;
+        background: rgba(138, 43, 226, 0.2);
         display: inline-block;
-        padding: 8px 25px;
+        padding: 8px 30px;
         border-radius: 30px;
-        border: 2px solid #2d3436;
-        box-shadow: 3px 3px 0px #2d3436;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
         position: relative;
         z-index: 2;
+        backdrop-filter: blur(5px);
       }
 
-      @media (max-width: 768px) {
-        .store-logo {
-          max-width: 250px;
-        }
-        .icon-1,
-        .icon-2 {
-          font-size: 2.5em;
-        }
-        .icon-3,
-        .icon-4 {
-          display: none;
-        }
-      }
-
-      /* CONTAINER BAWAH */
       .container {
         max-width: 800px;
         margin: 0 auto;
         padding: 0 15px;
       }
 
-      .category-title {
-        font-family: "Fredoka", sans-serif;
-        font-size: 1.3em;
-        color: white;
-        background: #ff6b6b;
-        display: inline-block;
-        padding: 8px 20px;
+      .tabs {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 25px;
+        overflow-x: auto;
+        padding: 5px;
+        scrollbar-width: none;
+      }
+      .tabs::-webkit-scrollbar {
+        display: none;
+      }
+
+      .tab-btn {
+        background: var(--tab-inactive);
+        color: var(--text-dark);
+        border: 3px solid var(--border-color);
+        padding: 10px 15px;
         border-radius: 20px;
-        margin: 30px 0 15px 0;
-        border: 3px solid #2d3436;
-        box-shadow: 4px 4px 0px #2d3436;
-        transform: rotate(-2deg);
+        font-family: "Fredoka", sans-serif;
+        font-size: 1em;
+        cursor: pointer;
+        box-shadow: 3px 3px 0px var(--shadow-color);
+        transition: 0.2s;
+        white-space: nowrap;
+      }
+
+      .tab-btn.active {
+        background: var(--accent);
+        color: #2d3436;
+        transform: translate(3px, 3px);
+        box-shadow: none;
+      }
+
+      .category-section {
+        display: none;
+        animation: fadeIn 0.4s ease;
+      }
+      .category-section.active {
+        display: block;
+      }
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
       }
 
       .product-grid {
@@ -182,7 +231,6 @@
         grid-template-columns: repeat(2, 1fr);
         gap: 15px;
       }
-
       @media (min-width: 600px) {
         .product-grid {
           grid-template-columns: repeat(3, 1fr);
@@ -192,21 +240,15 @@
 
       .card {
         background: var(--bg-card);
-        border: 3px solid #2d3436;
+        border: 3px solid var(--border-color);
         border-radius: 20px;
         padding: 15px;
         text-align: center;
-        transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         position: relative;
-        box-shadow: 4px 4px 0px #2d3436;
+        box-shadow: 4px 4px 0px var(--shadow-color);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-      }
-
-      .card:hover {
-        transform: translateY(-5px) scale(1.02);
-        box-shadow: 6px 6px 0px #2d3436;
       }
 
       .card-icon {
@@ -214,34 +256,19 @@
         margin-bottom: 5px;
         display: inline-block;
         filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, 0.2));
-        animation: float 3s ease-in-out infinite;
       }
-
-      @keyframes float {
-        0% {
-          transform: translateY(0px);
-        }
-        50% {
-          transform: translateY(-5px);
-        }
-        100% {
-          transform: translateY(0px);
-        }
-      }
-
       .card-title {
         font-family: "Fredoka", sans-serif;
         font-size: 1.1em;
-        color: #2d3436;
+        color: var(--text-dark);
         margin-bottom: 5px;
       }
-
       .card-price {
         font-size: 1em;
         color: #ff4757;
         font-weight: 800;
         margin-bottom: 15px;
-        background: #ffe66d;
+        background: var(--accent);
         padding: 3px 8px;
         border-radius: 10px;
         display: inline-block;
@@ -252,12 +279,11 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: #f1f2f6;
+        background: var(--input-bg);
         border-radius: 12px;
         padding: 5px;
-        border: 2px solid #dfe4ea;
+        border: 2px solid var(--border-color);
       }
-
       .controls button {
         color: white;
         border: 2px solid #2d3436;
@@ -270,27 +296,15 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: 0.1s;
       }
-
       .btn-min {
         background: var(--btn-minus);
         box-shadow: 0 3px 0 #c0392b;
       }
-      .btn-min:active {
-        transform: translateY(3px);
-        box-shadow: none;
-      }
-
       .btn-plus {
         background: var(--btn-plus);
         box-shadow: 0 3px 0 #218c53;
       }
-      .btn-plus:active:not(:disabled) {
-        transform: translateY(3px);
-        box-shadow: none;
-      }
-
       .controls button:disabled {
         background: #bdc3c7;
         box-shadow: 0 3px 0 #95a5a6;
@@ -298,30 +312,22 @@
         border-color: #7f8c8d;
       }
 
-      .qty-display {
-        font-family: "Fredoka", sans-serif;
-        font-size: 1.3em;
-        width: 30px;
-        color: #2d3436;
-      }
-
       .account-form {
         display: none;
-        background: #fff;
+        background: var(--bg-card);
         padding: 25px 20px;
         border-radius: 20px;
-        border: 4px solid #2d3436;
+        border: 4px solid var(--border-color);
         margin-top: 30px;
-        box-shadow: 6px 6px 0px #4ecdc4;
+        box-shadow: 6px 6px 0px var(--shadow-color);
         position: relative;
       }
-
       .account-form::before {
         content: "INFO PENTING! 📝";
         position: absolute;
         top: -15px;
         left: 20px;
-        background: #ffe66d;
+        background: var(--accent);
         border: 2px solid #2d3436;
         padding: 5px 15px;
         border-radius: 15px;
@@ -330,22 +336,11 @@
         color: #2d3436;
         box-shadow: 2px 2px 0px #2d3436;
       }
-
-      .account-form-header {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        margin-bottom: 15px;
-        color: #ff6b6b;
-        font-family: "Fredoka", sans-serif;
-        font-size: 1.2em;
-      }
-
       .account-form input {
         width: 100%;
-        background: #f1f2f6;
-        border: 3px solid #dfe4ea;
-        color: #2d3436;
+        background: var(--input-bg);
+        border: 3px solid var(--border-color);
+        color: var(--text-dark);
         padding: 15px;
         margin-bottom: 12px;
         border-radius: 12px;
@@ -353,15 +348,7 @@
         font-weight: 700;
         font-size: 1em;
         outline: none;
-        transition: 0.3s;
       }
-
-      .account-form input:focus {
-        border-color: #4ecdc4;
-        background: white;
-        box-shadow: 4px 4px 0px #4ecdc4;
-      }
-
       .form-note {
         font-size: 0.9em;
         color: #ff4757;
@@ -379,8 +366,8 @@
         bottom: 0;
         left: 0;
         right: 0;
-        background: #ffffff;
-        border-top: 4px solid #2d3436;
+        background: var(--bottom-bar);
+        border-top: 4px solid var(--border-color);
         padding: 15px 20px;
         display: flex;
         justify-content: space-between;
@@ -388,25 +375,13 @@
         z-index: 1000;
         box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.1);
       }
-
-      .bottom-info {
-        display: flex;
-        flex-direction: column;
-      }
-      .bottom-info small {
-        color: #636e72;
-        font-family: "Fredoka", sans-serif;
-        font-size: 0.85em;
-      }
       .bottom-price {
         color: #ff4757;
         font-family: "Fredoka", sans-serif;
         font-size: 1.6em;
-        text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.1);
       }
-
       .btn-order {
-        background: #ffe66d;
+        background: var(--accent);
         color: #2d3436;
         border: 3px solid #2d3436;
         padding: 12px 25px;
@@ -414,58 +389,56 @@
         font-family: "Fredoka", sans-serif;
         font-size: 1.2em;
         cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 10px;
         box-shadow: 4px 4px 0px #2d3436;
-        transition: 0.1s;
-      }
-
-      .btn-order:active {
-        transform: translate(4px, 4px);
-        box-shadow: 0px 0px 0px #2d3436;
-      }
-
-      @media (max-width: 400px) {
-        .btn-order {
-          padding: 10px 15px;
-          font-size: 1em;
-        }
-        .bottom-price {
-          font-size: 1.3em;
-        }
-        .card-icon {
-          font-size: 2.5em;
-        }
       }
     </style>
   </head>
   <body>
+    <div id="loader"><img src="logo.png" /></div>
+
     <div class="hero">
-      <div class="floating-icon icon-1">🎮</div>
-      <div class="floating-icon icon-2">💎</div>
-      <div class="floating-icon icon-3">🚀</div>
-      <div class="floating-icon icon-4">💸</div>
-
-      <!-- BAGIAN LOGO BARU (FORMAT PNG) -->
-      <img src="logo.png" alt="Logo Zhita Store" class="store-logo" />
-
+      <button class="dark-mode-btn" onclick="toggleTheme()" id="theme-icon">
+        🌙
+      </button>
+      <img src="logo.png" class="store-logo" />
       <p>✨ Top Up Termurah & Tercepat! ✨</p>
     </div>
 
     <div class="container">
-      <div class="category-title">💎 ROBUX LOGIN</div>
-      <div class="product-grid" id="robux-container"></div>
+      <div class="tabs">
+        <button class="tab-btn active" onclick="bukaTab('sec-robux', this)">
+          💎 Robux
+        </button>
+        <button class="tab-btn" onclick="bukaTab('sec-uang', this)">
+          💵 Uang DDS
+        </button>
+        <button class="tab-btn" onclick="bukaTab('sec-gp-dds', this)">
+          🎮 GP DDS
+        </button>
+        <button class="tab-btn" onclick="bukaTab('sec-gp-cdid', this)">
+          🚗 GP CDID
+        </button>
+      </div>
 
-      <div class="category-title">💵 UANG DDS</div>
-      <div class="product-grid" id="uang-container"></div>
-
-      <div class="category-title">🎮 GAMEPASS DDS (Maks 1)</div>
-      <div class="product-grid" id="gamepass-container"></div>
+      <div id="sec-robux" class="category-section active">
+        <div class="product-grid" id="robux-container"></div>
+      </div>
+      <div id="sec-uang" class="category-section">
+        <div class="product-grid" id="uang-container"></div>
+      </div>
+      <div id="sec-gp-dds" class="category-section">
+        <div class="product-grid" id="gamepass-container"></div>
+      </div>
+      <div id="sec-gp-cdid" class="category-section">
+        <div class="product-grid" id="gp-cdid-container"></div>
+      </div>
 
       <div class="account-form" id="account-section">
-        <div class="account-form-header">
-          <span id="form-title">Data Akun Kamu</span>
+        <div
+          id="form-title"
+          style="font-family: &quot;Fredoka&quot;; margin-bottom: 10px"
+        >
+          Data Akun Kamu
         </div>
         <input type="text" id="roblox-user" placeholder="Username Roblox" />
         <input type="text" id="roblox-pass" placeholder="Password Roblox" />
@@ -477,19 +450,48 @@
 
     <div class="bottom-bar">
       <div class="bottom-info">
-        <small>TOTAL BELANJAAN</small>
+        <small style="font-family: &quot;Fredoka&quot;">TOTAL BELANJA</small>
         <div class="bottom-price">Rp <span id="total-price">0</span></div>
       </div>
       <button class="btn-order" onclick="orderWhatsApp()">🛒 GAS BELI!</button>
     </div>
 
     <script>
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          document.getElementById("loader").style.opacity = "0";
+          setTimeout(
+            () => (document.getElementById("loader").style.display = "none"),
+            500,
+          );
+        }, 1200);
+      });
+
+      function toggleTheme() {
+        document.body.classList.toggle("dark-mode");
+        const isDark = document.body.classList.contains("dark-mode");
+        document.getElementById("theme-icon").innerText = isDark ? "☀️" : "🌙";
+        localStorage.setItem("zhita_theme", isDark ? "dark" : "light");
+      }
+      if (localStorage.getItem("zhita_theme") === "dark") toggleTheme();
+
+      function bukaTab(tabId, elementTombol) {
+        document
+          .querySelectorAll(".category-section")
+          .forEach((el) => el.classList.remove("active"));
+        document
+          .querySelectorAll(".tab-btn")
+          .forEach((el) => el.classList.remove("active"));
+        document.getElementById(tabId).classList.add("active");
+        elementTombol.classList.add("active");
+      }
+
       const products = [
         {
           id: "rbx80",
           cat: "robux",
           icon: "💎",
-          isGamepass: false,
+          game: "ROBUX",
           name: "80 Robux",
           price: 16000,
         },
@@ -497,7 +499,7 @@
           id: "rbx160",
           cat: "robux",
           icon: "💎",
-          isGamepass: false,
+          game: "ROBUX",
           name: "160 Robux",
           price: 32000,
         },
@@ -505,7 +507,7 @@
           id: "rbx240",
           cat: "robux",
           icon: "💎",
-          isGamepass: false,
+          game: "ROBUX",
           name: "240 Robux",
           price: 48000,
         },
@@ -513,7 +515,7 @@
           id: "rbx320",
           cat: "robux",
           icon: "💎",
-          isGamepass: false,
+          game: "ROBUX",
           name: "320 Robux",
           price: 64000,
         },
@@ -521,7 +523,7 @@
           id: "rbx500",
           cat: "robux",
           icon: "💎",
-          isGamepass: false,
+          game: "ROBUX",
           name: "500 Robux",
           price: 78000,
         },
@@ -529,7 +531,7 @@
           id: "rbx580",
           cat: "robux",
           icon: "💎",
-          isGamepass: false,
+          game: "ROBUX",
           name: "580 Robux",
           price: 94000,
         },
@@ -537,7 +539,7 @@
           id: "rbx660",
           cat: "robux",
           icon: "💎",
-          isGamepass: false,
+          game: "ROBUX",
           name: "660 Robux",
           price: 110000,
         },
@@ -545,7 +547,7 @@
           id: "rbx740",
           cat: "robux",
           icon: "💎",
-          isGamepass: false,
+          game: "ROBUX",
           name: "740 Robux",
           price: 126000,
         },
@@ -553,7 +555,7 @@
           id: "rbx820",
           cat: "robux",
           icon: "💎",
-          isGamepass: false,
+          game: "ROBUX",
           name: "820 Robux",
           price: 142000,
         },
@@ -561,152 +563,261 @@
           id: "rbx1000",
           cat: "robux",
           icon: "💎",
-          isGamepass: false,
+          game: "ROBUX",
           name: "1000 Robux",
           price: 155000,
         },
 
         {
           id: "dds500jt",
-          cat: "gp",
+          cat: "uang_dds",
           icon: "💰",
-          isGamepass: false,
+          game: "DDS",
           name: "Uang 500 Juta",
           price: 45000,
         },
         {
           id: "dds100jt",
-          cat: "gp",
+          cat: "uang_dds",
           icon: "💸",
-          isGamepass: false,
+          game: "DDS",
           name: "Uang 100 Juta",
           price: 12000,
         },
         {
           id: "dds50jt",
-          cat: "gp",
+          cat: "uang_dds",
           icon: "💵",
-          isGamepass: false,
+          game: "DDS",
           name: "Uang 50 Juta",
           price: 7000,
         },
         {
           id: "dds10jt",
-          cat: "gp",
+          cat: "uang_dds",
           icon: "🪙",
-          isGamepass: false,
+          game: "DDS",
           name: "Uang 10 Juta",
           price: 4000,
         },
 
         {
           id: "gp_pay",
-          cat: "gp",
+          cat: "gp_dds",
           icon: "🎟️",
+          game: "DDS",
           isGamepass: true,
           name: "2x Paycheck",
           price: 50000,
         },
         {
           id: "gp_pol",
-          cat: "gp",
+          cat: "gp_dds",
           icon: "🚓",
+          game: "DDS",
           isGamepass: true,
           name: "Police Pass",
           price: 17000,
         },
         {
           id: "gp_lux",
-          cat: "gp",
+          cat: "gp_dds",
           icon: "🏎️",
+          game: "DDS",
           isGamepass: true,
           name: "Luxury Pass",
           price: 14000,
         },
         {
           id: "gp_drag",
-          cat: "gp",
+          cat: "gp_dds",
           icon: "🏁",
+          game: "DDS",
           isGamepass: true,
           name: "Dragspec Pass",
           price: 13000,
         },
         {
           id: "gp_slot",
-          cat: "gp",
+          cat: "gp_dds",
           icon: "📦",
+          game: "DDS",
           isGamepass: true,
           name: "Slot Expansion",
           price: 10000,
         },
         {
           id: "gp_rims",
-          cat: "gp",
+          cat: "gp_dds",
           icon: "🛞",
+          game: "DDS",
           isGamepass: true,
           name: "Rims (Velg)",
           price: 9000,
         },
         {
           id: "gp_plat",
-          cat: "gp",
+          cat: "gp_dds",
           icon: "🏷️",
+          game: "DDS",
           isGamepass: true,
           name: "Plate (Plat)",
           price: 9000,
         },
         {
           id: "gp_acc",
-          cat: "gp",
+          cat: "gp_dds",
           icon: "✨",
+          game: "DDS",
           isGamepass: true,
           name: "Premium Accs",
           price: 7000,
         },
         {
           id: "gp_col",
-          cat: "gp",
+          cat: "gp_dds",
           icon: "🎨",
+          game: "DDS",
           isGamepass: true,
           name: "Warna Lanjutan",
           price: 7000,
         },
         {
           id: "gp_susp",
-          cat: "gp",
+          cat: "gp_dds",
           icon: "⚙️",
+          game: "DDS",
           isGamepass: true,
           name: "Suspension Pro",
           price: 4000,
         },
         {
           id: "gp_rad",
-          cat: "gp",
+          cat: "gp_dds",
           icon: "📻",
+          game: "DDS",
           isGamepass: true,
           name: "Radio",
           price: 4000,
+        },
+
+        {
+          id: "cdid_ear",
+          cat: "gp_cdid",
+          icon: "✨",
+          game: "CDID",
+          isGamepass: true,
+          name: "50% Ear Job",
+          price: 55000,
+        },
+        {
+          id: "cdid_pay",
+          cat: "gp_cdid",
+          icon: "💵",
+          game: "CDID",
+          isGamepass: true,
+          name: "2x Paycheck",
+          price: 55000,
+        },
+        {
+          id: "cdid_2xown",
+          cat: "gp_cdid",
+          icon: "🚘",
+          game: "CDID",
+          isGamepass: true,
+          name: "2x Add Own Car",
+          price: 30000,
+        },
+        {
+          id: "cdid_lux",
+          cat: "gp_cdid",
+          icon: "💎",
+          game: "CDID",
+          isGamepass: true,
+          name: "Luxury Car",
+          price: 29000,
+        },
+        {
+          id: "cdid_adv",
+          cat: "gp_cdid",
+          icon: "🛠️",
+          game: "CDID",
+          isGamepass: true,
+          name: "Adv. Modifs",
+          price: 28000,
+        },
+        {
+          id: "cdid_rare",
+          cat: "gp_cdid",
+          icon: "🏎️",
+          game: "CDID",
+          isGamepass: true,
+          name: "Rare Import",
+          price: 23000,
+        },
+        {
+          id: "cdid_retro",
+          cat: "gp_cdid",
+          icon: "📼",
+          game: "CDID",
+          isGamepass: true,
+          name: "Retro Pass",
+          price: 20000,
+        },
+        {
+          id: "cdid_emg",
+          cat: "gp_cdid",
+          icon: "🚑",
+          game: "CDID",
+          isGamepass: true,
+          name: "Emergency Car",
+          price: 17000,
+        },
+        {
+          id: "cdid_add",
+          cat: "gp_cdid",
+          icon: "🔑",
+          game: "CDID",
+          isGamepass: true,
+          name: "Add Own Car",
+          price: 15000,
+        },
+        {
+          id: "cdid_house",
+          cat: "gp_cdid",
+          icon: "🏠",
+          game: "CDID",
+          isGamepass: true,
+          name: "Luxury House",
+          price: 13000,
+        },
+        {
+          id: "cdid_maxslot",
+          cat: "gp_cdid",
+          icon: "🏆",
+          game: "CDID",
+          isGamepass: true,
+          name: "Max Car Slot",
+          price: 100000,
         },
       ];
 
       function render() {
         products.forEach((p) => {
-          let container =
+          let containerId =
             p.cat === "robux"
               ? "robux-container"
-              : p.name.includes("Uang")
+              : p.cat === "uang_dds"
                 ? "uang-container"
-                : "gamepass-container";
-          document.getElementById(container).innerHTML += `
+                : p.cat === "gp_dds"
+                  ? "gamepass-container"
+                  : "gp-cdid-container";
+          document.getElementById(containerId).innerHTML += `
                 <div class="card">
-                    <div>
-                        <div class="card-icon">${p.icon}</div>
-                        <div class="card-title">${p.name}</div>
-                        <div class="card-price">Rp ${p.price.toLocaleString("id-ID")}</div>
-                    </div>
+                    <div><div class="card-icon">${p.icon}</div><div class="card-title">${p.name}</div><div class="card-price">Rp ${p.price.toLocaleString("id-ID")}</div></div>
                     <div class="controls">
                         <button class="btn-min" onclick="update('${p.id}', -1)" id="btn-minus-${p.id}">-</button>
-                        <div class="qty-display" id="qty-${p.id}">0</div>
+                        <div class="qty-display" id="qty-${p.id}" style="font-family:'Fredoka'">0</div>
                         <button class="btn-plus" onclick="update('${p.id}', 1)" id="btn-plus-${p.id}">+</button>
                     </div>
                 </div>`;
@@ -721,112 +832,92 @@
         let p = products.find((x) => x.id === id);
         let current = cart[id] ? cart[id].qty : 0;
         let next = current + change;
-
-        if (next < 0) return;
-        if (p.isGamepass && next > 1) return;
-
-        if (next === 0) {
-          delete cart[id];
-        } else {
-          cart[id] = { name: p.name, qty: next, price: p.price, cat: p.cat };
-        }
-
+        if (next < 0 || (p.isGamepass && next > 1)) return;
+        if (next === 0) delete cart[id];
+        else
+          cart[id] = {
+            name: p.name,
+            qty: next,
+            price: p.price,
+            cat: p.cat,
+            game: p.game,
+          };
         document.getElementById("qty-" + id).innerText = next;
-
-        if (p.isGamepass) {
+        if (p.isGamepass)
           document.getElementById(`btn-plus-${id}`).disabled = next >= 1;
-        }
-
         total = 0;
         let hasRobux = false;
-        let hasGP = false;
-
+        let hasOther = false;
         for (let key in cart) {
           total += cart[key].qty * cart[key].price;
           if (cart[key].cat === "robux") hasRobux = true;
-          if (cart[key].cat === "gp") hasGP = true;
+          else hasOther = true;
         }
-
         document.getElementById("total-price").innerText =
           total.toLocaleString("id-ID");
-
-        let accountSection = document.getElementById("account-section");
-        let passInput = document.getElementById("roblox-pass");
-        let formTitle = document.getElementById("form-title");
-        let formNote = document.getElementById("form-note");
-        let userInput = document.getElementById("roblox-user");
-
-        if (hasRobux || hasGP) {
-          accountSection.style.display = "block";
-
-          if (hasRobux) {
-            passInput.style.display = "block";
-            formTitle.innerText = "🔐 Data Akun Roblox";
-            formNote.innerText =
-              "Wajib matikan 2-Step Verification (2FA) ya kak!";
-            userInput.placeholder = "Username Roblox";
-          } else {
-            passInput.style.display = "none";
-            formTitle.innerText = "🎯 Target Pengiriman";
-            formNote.innerText =
-              "Pastikan Username sudah benar (Bukan Display Name).";
-            userInput.placeholder = "Username Tujuan";
-          }
-        } else {
-          accountSection.style.display = "none";
-        }
+        document.getElementById("account-section").style.display =
+          hasRobux || hasOther ? "block" : "none";
+        document.getElementById("roblox-pass").style.display = hasRobux
+          ? "block"
+          : "none";
       }
 
       function orderWhatsApp() {
-        if (total === 0) return alert("Pilih barangnya dulu dong! 😉");
+        if (total === 0) return alert("Pilih barang dulu!");
 
         let hasRobux = Object.values(cart).some((i) => i.cat === "robux");
-        let hasGP = Object.values(cart).some((i) => i.cat === "gp");
+        let hasOther = Object.values(cart).some((i) => i.cat !== "robux");
+        let rUser = document.getElementById("roblox-user").value.trim();
+        let rPass = document.getElementById("roblox-pass").value.trim();
 
-        let rbxUser = document.getElementById("roblox-user").value.trim();
-        let rbxPass = document.getElementById("roblox-pass").value.trim();
-
-        if (hasRobux && (rbxUser === "" || rbxPass === "")) {
-          return alert(
-            "Username dan Password Roblox-nya jangan lupa diisi ya!",
-          );
-        }
-        if (!hasRobux && hasGP && rbxUser === "") {
-          return alert("Username tujuan pengirimannya diisi dulu ya!");
+        if (
+          (hasRobux && (rUser === "" || rPass === "")) ||
+          (!hasRobux && hasOther && rUser === "")
+        ) {
+          return alert("Lengkapi data akun!");
         }
 
-        let numRobux = "6285837593034";
-        let numGP = "62881081022604";
-        let targetNum = "";
+        let targetNum =
+          hasRobux && !hasOther
+            ? "6285837593034"
+            : !hasRobux && hasOther
+              ? "62881081022604"
+              : confirm("OK untuk Admin Gamepass, Cancel untuk Admin Robux")
+                ? "62881081022604"
+                : "6285837593034";
 
-        if (hasRobux && !hasGP) targetNum = numRobux;
-        else if (!hasRobux && hasGP) targetNum = numGP;
-        else {
-          let pilih = confirm(
-            "Orderan ada Robux & Gamepass.\n\nKlik OK -> Ke Admin Gamepass\nKlik Cancel -> Ke Admin Robux",
-          );
-          targetNum = pilih ? numGP : numRobux;
-        }
+        // Menggunakan format yang sangat sederhana tanpa simbol aneh
+        let msg = "Halo Admin Zhita Store, saya mau order:\n\n";
 
-        let msg = "Halo Admin *Zhita Store*, mau order dong:\n\n";
         for (let key in cart) {
-          // Menggunakan tanda strip (-) biasa agar tidak error di WA
-          msg += `- ${cart[key].name} : ${cart[key].qty}x (Rp ${(cart[key].qty * cart[key].price).toLocaleString("id-ID")})\n`;
+          let item = cart[key];
+          let subtotal = item.qty * item.price;
+          // Format: [GAME] NAMA x JUMLAH (Rp HARGA)
+          msg +=
+            "[" +
+            item.game +
+            "] " +
+            item.name +
+            " x" +
+            item.qty +
+            " (Rp " +
+            subtotal +
+            ")\n";
         }
 
         if (hasRobux) {
-          msg += `\n*Data Akun:*`;
-          msg += `\nUsername: ${rbxUser}`;
-          msg += `\nPassword: ${rbxPass}\n`;
+          msg += "\nDATA LOGIN:\nUser: " + rUser + "\nPass: " + rPass + "\n";
         } else {
-          msg += `\n*Kirim Ke:*`;
-          msg += `\nUsername: ${rbxUser}\n`;
+          msg += "\nKIRIM KE:\nUser: " + rUser + "\n";
         }
 
-        msg += `\n*Total: Rp ${total.toLocaleString("id-ID")}*\n\nBayarnya lewat apa nih min?`;
+        msg += "\nTOTAL TAGIHAN: Rp " + total;
+
+        // Gunakan pembersihan teks ekstra sebelum dikirim
+        let finalMsg = msg.replace(/[^\x00-\x7F]/g, "");
 
         window.open(
-          `https://wa.me/${targetNum}?text=${encodeURIComponent(msg)}`,
+          "https://wa.me/" + targetNum + "?text=" + encodeURIComponent(msg),
           "_blank",
         );
       }
