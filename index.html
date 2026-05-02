@@ -669,7 +669,7 @@
           name: "Radio",
           price: 4000,
         },
-        // GP CDID (REVISI)
+        // GP CDID
         {
           id: "cdid_ear",
           cat: "gp_cdid",
@@ -820,12 +820,32 @@
           document.getElementById("form-title").innerText =
             "🔐 Data Akun Roblox";
       }
+
       function orderWhatsApp() {
-        if (total === 0) return alert("Pilih barang!");
+        if (total === 0) return alert("Pilih barang terlebih dahulu!");
+
         let hasR = Object.values(cart).some((i) => i.cat === "robux");
         let hasO = Object.values(cart).some((i) => i.cat !== "robux");
-        let u = document.getElementById("roblox-user").value;
-        let p = document.getElementById("roblox-pass").value;
+
+        // Mengambil nilai input dan menghapus spasi kosong di awal/akhir
+        let u = document.getElementById("roblox-user").value.trim();
+        let p = document.getElementById("roblox-pass").value.trim();
+
+        // LOGIKA PENGECEKAN (VALIDASI)
+        if (hasR) {
+          // Jika ada Robux, Username dan Password WAJIB diisi
+          if (!u || !p) {
+            return alert(
+              "⚠️ Mohon isi Username dan Password Roblox untuk orderan Robux!",
+            );
+          }
+        } else if (hasO) {
+          // Jika hanya Uang DDS atau Gamepass, Username WAJIB diisi
+          if (!u) {
+            return alert("⚠️ Mohon isi Username Roblox target pengiriman!");
+          }
+        }
+
         let target = hasR && !hasO ? "6285837593034" : "62881081022604";
         let msg = "Halo Admin Zhita Store, order dong:\n\n";
         for (let k in cart)
