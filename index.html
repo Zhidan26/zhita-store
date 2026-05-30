@@ -8,6 +8,7 @@
       href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
       :root {
         --bg-main: #f0f8ff;
@@ -100,6 +101,7 @@
       #fake-alert.show {
         left: 15px;
       }
+
       .hero {
         position: relative;
         text-align: center;
@@ -134,6 +136,7 @@
         position: relative;
         z-index: 2;
       }
+
       .testi-container {
         margin: 20px 0;
         padding: 0 15px;
@@ -154,30 +157,51 @@
       .testi-card {
         min-width: 140px;
         height: 200px;
-        background: #ccc;
+        background: var(--bg-card);
         border-radius: 12px;
         border: 2px solid var(--border-color);
         overflow: hidden;
         flex-shrink: 0;
         box-shadow: 3px 3px 0px var(--shadow-color);
+        position: relative;
       }
       .testi-card img {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
+      .testi-caption {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        font-size: 0.8em;
+        padding: 6px 0;
+        text-align: center;
+        font-family: "Fredoka";
+        backdrop-filter: blur(3px);
+      }
+
       .container {
         max-width: 800px;
         margin: 0 auto;
         padding: 0 15px;
       }
+
       .tabs {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        background-color: var(--bg-main);
         display: flex;
         gap: 10px;
         margin-bottom: 25px;
         overflow-x: auto;
-        padding: 5px;
+        padding: 15px 5px 15px 5px;
         scrollbar-width: none;
+        transition: 0.3s;
       }
       .tab-btn {
         background: var(--tab-inactive);
@@ -197,6 +221,7 @@
         transform: translate(2px, 2px);
         box-shadow: none;
       }
+
       .category-section {
         display: none;
         animation: fadeIn 0.4s ease;
@@ -214,6 +239,7 @@
           transform: translateY(0);
         }
       }
+
       .product-grid {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -225,6 +251,7 @@
           gap: 20px;
         }
       }
+
       .card {
         background: var(--bg-card);
         border: 3px solid var(--border-color);
@@ -275,6 +302,7 @@
       .btn-plus {
         background: var(--btn-plus);
       }
+
       .account-form {
         display: none;
         background: var(--bg-card);
@@ -293,7 +321,42 @@
         margin-bottom: 10px;
         border-radius: 10px;
         outline: none;
+        font-family: "Nunito", sans-serif;
       }
+
+      /* GAYA BARU UNTUK PILIHAN ADMIN (RADIO BUTTON KARTU) */
+      .admin-selection-wrapper {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+      .admin-radio {
+        flex: 1;
+        cursor: pointer;
+      }
+      .admin-radio input {
+        display: none; /* Sembunyikan bulatan radio aslinya */
+      }
+      .admin-box {
+        background: var(--input-bg);
+        border: 3px solid var(--border-color);
+        border-radius: 10px;
+        padding: 12px 5px;
+        text-align: center;
+        font-family: "Fredoka", sans-serif;
+        font-size: 0.95em;
+        font-weight: 600;
+        color: var(--text-dark);
+        transition: all 0.2s ease;
+      }
+      /* Efek ketika Admin dipilih */
+      .admin-radio input:checked + .admin-box {
+        background: var(--accent);
+        transform: translateY(-3px);
+        box-shadow: 4px 4px 0px var(--shadow-color);
+        border-color: #2d3436;
+      }
+
       .bottom-bar {
         position: fixed;
         bottom: 0;
@@ -322,6 +385,18 @@
         cursor: pointer;
         box-shadow: 4px 4px 0px #2d3436;
       }
+
+      .swal2-popup {
+        font-family: "Nunito", sans-serif !important;
+        border-radius: 20px !important;
+        border: 3px solid #2d3436 !important;
+        box-shadow: 6px 6px 0px #2d3436 !important;
+      }
+      .swal2-confirm {
+        font-family: "Fredoka", sans-serif !important;
+        border-radius: 10px !important;
+        border: 2px solid #2d3436 !important;
+      }
     </style>
   </head>
   <body>
@@ -330,6 +405,7 @@
       <div style="font-size: 1.5em">🛒</div>
       <div id="alert-content"></div>
     </div>
+
     <div class="hero">
       <button
         onclick="toggleTheme()"
@@ -349,20 +425,24 @@
       <img src="logo.png" class="store-logo" />
       <p>✨ Top Up Termurah & Tercepat! ✨</p>
     </div>
+
     <div class="container">
       <div class="testi-container">
         <div class="testi-title">⭐ Testimoni Zhita Store</div>
         <div class="testi-wrapper" id="testiSlider">
-          <!-- Testi 1-20 -->
           <script>
             for (let i = 1; i <= 20; i++) {
               document.write(
-                `<div class="testi-card"><img src="testi${i}.jpg"></div>`,
+                `<div class="testi-card">
+                  <img src="testi${i}.jpg" onerror="this.src='https://placehold.co/150x200/cccccc/2d3436?text=Testi+${i}'" />
+                  <div class="testi-caption">Sukses #${i}</div>
+                </div>`,
               );
             }
           </script>
         </div>
       </div>
+
       <div class="tabs">
         <button class="tab-btn active" onclick="bukaTab('sec-robux', this)">
           💎 Robux
@@ -377,6 +457,7 @@
           🚗 GP CDID
         </button>
       </div>
+
       <div id="sec-robux" class="category-section active">
         <div class="product-grid" id="robux-container"></div>
       </div>
@@ -389,6 +470,7 @@
       <div id="sec-gp-cdid" class="category-section">
         <div class="product-grid" id="gp-cdid-container"></div>
       </div>
+
       <div class="account-form" id="account-section">
         <div
           id="form-title"
@@ -398,6 +480,31 @@
         </div>
         <input type="text" id="roblox-user" placeholder="Username Roblox" />
         <input type="text" id="roblox-pass" placeholder="Password Roblox" />
+
+        <div id="admin-select-container" style="display: none">
+          <div
+            style="
+              font-family: &quot;Nunito&quot;;
+              font-size: 0.9em;
+              font-weight: 700;
+              margin-bottom: 8px;
+              color: var(--text-dark);
+            "
+          >
+            Pilih Admin Gamepass:
+          </div>
+          <div class="admin-selection-wrapper">
+            <label class="admin-radio">
+              <input type="radio" name="admin" value="62881081022604" checked />
+              <div class="admin-box">👨‍💻 Admin 1</div>
+            </label>
+            <label class="admin-radio">
+              <input type="radio" name="admin" value="62895638733088" />
+              <div class="admin-box">👩‍💻 Admin 2</div>
+            </label>
+          </div>
+        </div>
+
         <p
           id="form-note"
           style="
@@ -414,6 +521,7 @@
         </p>
       </div>
     </div>
+
     <div class="bottom-bar">
       <div>
         <small style="font-family: &quot;Fredoka&quot;">TOTAL</small>
@@ -421,6 +529,7 @@
       </div>
       <button class="btn-order" onclick="orderWhatsApp()">🛒 BELI</button>
     </div>
+
     <script>
       window.addEventListener("load", () => {
         setTimeout(() => {
@@ -431,15 +540,18 @@
           );
         }, 1000);
       });
+
       function toggleTheme() {
         document.body.classList.toggle("dark-mode");
       }
+
       const slider = document.getElementById("testiSlider");
       setInterval(() => {
         if (slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth)
           slider.scrollLeft = 0;
         else slider.scrollLeft += 150;
       }, 3000);
+
       const names = [
         "Zhidan",
         "Lita",
@@ -461,6 +573,7 @@
         "Police Pass",
         "Luxury Car",
       ];
+
       function showFake() {
         const alert = document.getElementById("fake-alert");
         document.getElementById("alert-content").innerHTML =
@@ -469,6 +582,7 @@
         setTimeout(() => alert.classList.remove("show"), 4000);
       }
       setInterval(showFake, 10000);
+
       function bukaTab(tabId, btn) {
         document
           .querySelectorAll(".category-section")
@@ -478,9 +592,13 @@
           .forEach((el) => el.classList.remove("active"));
         document.getElementById(tabId).classList.add("active");
         btn.classList.add("active");
+        window.scrollTo({
+          top: document.querySelector(".tabs").offsetTop - 10,
+          behavior: "smooth",
+        });
       }
+
       const products = [
-        // ROBUX
         {
           id: "rbx80",
           cat: "robux",
@@ -551,7 +669,6 @@
           name: "1000 Robux",
           price: 155000,
         },
-        // UANG DDS
         {
           id: "dds500",
           cat: "uang_dds",
@@ -580,7 +697,6 @@
           name: "Uang 10 Juta",
           price: 4000,
         },
-        // GP DDS
         {
           id: "gp_pay",
           cat: "gp_dds",
@@ -669,7 +785,6 @@
           name: "Radio",
           price: 4000,
         },
-        // GP CDID
         {
           id: "cdid_ear",
           cat: "gp_cdid",
@@ -759,6 +874,7 @@
           price: 100000,
         },
       ];
+
       function render() {
         products.forEach((p) => {
           let cid =
@@ -770,19 +886,21 @@
                   ? "gamepass-container"
                   : "gp-cdid-container";
           document.getElementById(cid).innerHTML += `
-                <div class="card">
-                    <div><div class="card-icon">🎮</div><div class="card-title">${p.name}</div><div class="card-price">Rp ${p.price.toLocaleString("id-ID")}</div></div>
-                    <div class="controls">
-                        <button class="btn-min" onclick="update('${p.id}',-1)">-</button>
-                        <div id="qty-${p.id}">0</div>
-                        <button class="btn-plus" onclick="update('${p.id}',1)">+</button>
-                    </div>
-                </div>`;
+            <div class="card">
+                <div><div class="card-icon">🎮</div><div class="card-title">${p.name}</div><div class="card-price">Rp ${p.price.toLocaleString("id-ID")}</div></div>
+                <div class="controls">
+                    <button class="btn-min" onclick="update('${p.id}',-1)">-</button>
+                    <div id="qty-${p.id}">0</div>
+                    <button class="btn-plus" onclick="update('${p.id}',1)">+</button>
+                </div>
+            </div>`;
         });
       }
       render();
+
       let cart = {};
       let total = 0;
+
       function update(id, chg) {
         let p = products.find((x) => x.id === id);
         let cur = cart[id] ? cart[id].qty : 0;
@@ -797,6 +915,7 @@
             game: p.game,
             cat: p.cat,
           };
+
         document.getElementById("qty-" + id).innerText = next;
         total = 0;
         let hasR = false;
@@ -806,6 +925,7 @@
           if (cart[k].cat === "robux") hasR = true;
           else hasO = true;
         }
+
         document.getElementById("total-price").innerText =
           total.toLocaleString("id-ID");
         document.getElementById("account-section").style.display =
@@ -813,6 +933,12 @@
         document.getElementById("roblox-pass").style.display = hasR
           ? "block"
           : "none";
+
+        // Memunculkan Pilihan Admin yang baru
+        document.getElementById("admin-select-container").style.display = hasO
+          ? "block"
+          : "none";
+
         if (!hasR && hasO)
           document.getElementById("form-title").innerText =
             "🎯 Target Pengiriman (Username)";
@@ -822,38 +948,53 @@
       }
 
       function orderWhatsApp() {
-        if (total === 0) return alert("Pilih barang terlebih dahulu!");
+        if (total === 0) {
+          return Swal.fire({
+            icon: "warning",
+            title: "Ups!",
+            text: "Pilih barang terlebih dahulu di keranjang.",
+            confirmButtonColor: "#ff6b6b",
+          });
+        }
 
         let hasR = Object.values(cart).some((i) => i.cat === "robux");
         let hasO = Object.values(cart).some((i) => i.cat !== "robux");
 
-        // Mengambil nilai input dan menghapus spasi kosong di awal/akhir
         let u = document.getElementById("roblox-user").value.trim();
         let p = document.getElementById("roblox-pass").value.trim();
 
-        // LOGIKA PENGECEKAN (VALIDASI)
         if (hasR) {
-          // Jika ada Robux, Username dan Password WAJIB diisi
-          if (!u || !p) {
-            return alert(
-              "⚠️ Mohon isi Username dan Password Roblox untuk orderan Robux!",
-            );
-          }
+          if (!u || !p)
+            return Swal.fire({
+              icon: "error",
+              title: "Data Belum Lengkap",
+              text: "Mohon isi Username dan Password Roblox untuk orderan Robux!",
+              confirmButtonColor: "#ff4757",
+            });
         } else if (hasO) {
-          // Jika hanya Uang DDS atau Gamepass, Username WAJIB diisi
-          if (!u) {
-            return alert("⚠️ Mohon isi Username Roblox target pengiriman!");
-          }
+          if (!u)
+            return Swal.fire({
+              icon: "error",
+              title: "Data Belum Lengkap",
+              text: "Mohon isi Username Roblox target pengiriman!",
+              confirmButtonColor: "#ff4757",
+            });
         }
 
-        let target = hasR && !hasO ? "6285837593034" : "62881081022604";
+        // Ambil nomor tujuan dari radio button yang dipilih
+        let selectedAdmin = document.querySelector(
+          'input[name="admin"]:checked',
+        ).value;
+        let target = hasR && !hasO ? "6285837593034" : selectedAdmin;
+
         let msg = "Halo Admin Zhita Store, order dong:\n\n";
         for (let k in cart)
           msg += `[${cart[k].game}] ${cart[k].name} x${cart[k].qty} (Rp ${cart[k].qty * cart[k].price})\n`;
         msg += hasR
           ? `\nLOGIN:\nUser: ${u}\nPass: ${p}`
           : `\nKIRIM KE:\nUser: ${u}`;
-        msg += `\n\nTOTAL: Rp ${total}`;
+        msg += `\n\nTOTAL: Rp ${total.toLocaleString("id-ID")}`;
+
         window.open(
           "https://wa.me/" + target + "?text=" + encodeURIComponent(msg),
           "_blank",
@@ -862,3 +1003,4 @@
     </script>
   </body>
 </html>
+
