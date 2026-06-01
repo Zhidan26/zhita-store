@@ -326,10 +326,11 @@
 
       /* GAYA BARU UNTUK PILIHAN ADMIN (RADIO BUTTON KARTU) */
       .admin-selection-wrapper {
-        display: flex;
-        gap: 10px;
-        margin-bottom: 15px;
-      }
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 15px;
+}
       .admin-radio {
         flex: 1;
         cursor: pointer;
@@ -492,18 +493,23 @@
             "
           >
             Pilih Admin Gamepass:
-          </div>
-          <div class="admin-selection-wrapper">
-            <label class="admin-radio">
-              <input type="radio" name="admin" value="62881081022604" checked />
-              <div class="admin-box">👨‍💻 Admin 1</div>
-            </label>
-            <label class="admin-radio">
-              <input type="radio" name="admin" value="62895638733088" />
-              <div class="admin-box">👩‍💻 Admin 2</div>
-            </label>
-          </div>
-        </div>
+         <div class="admin-selection-wrapper">
+  <label class="admin-radio">
+    <input type="radio" name="admin" value="62881081022604" checked />
+    <div class="admin-box">👨‍💻 Admin 1</div>
+  </label>
+
+  <label class="admin-radio">
+    <input type="radio" name="admin" value="62895638733088" />
+    <div class="admin-box">👩‍💻 Admin 2</div>
+  </label>
+
+  <label class="admin-radio">
+    <input type="radio" name="admin" value="6288274108934" />
+    <div class="admin-box">🛡️ Admin 3 (Backup)</div>
+  </label>
+</div>
+
 
         <p
           id="form-note"
@@ -517,7 +523,7 @@
             border-radius: 5px;
           "
         >
-          Matikan 2-Step Verification!
+          
         </p>
       </div>
     </div>
@@ -1003,4 +1009,3 @@
     </script>
   </body>
 </html>
-
