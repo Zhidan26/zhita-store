@@ -10,52 +10,71 @@
     />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-      :root {
-        --bg-main: #f0f8ff;
-        --bg-card: #ffffff;
-        --text-dark: #2d3436;
-        --border-color: #2d3436;
-        --shadow-color: #2d3436;
-        --hero-bg: linear-gradient(135deg, #0b0f19 0%, #1a1025 100%);
-        --tab-inactive: #ffffff;
-        --bottom-bar: #ffffff;
-        --input-bg: #f1f2f6;
-        --primary: #ff6b6b;
-        --accent: #ffe66d;
-        --btn-plus: #2ed573;
-        --btn-minus: #ff4757;
-      }
-      body.dark-mode {
-        --bg-main: #111827;
-        --bg-card: #1f2937;
-        --text-dark: #f9fafb;
-        --border-color: #000000;
-        --shadow-color: #000000;
-        --hero-bg: linear-gradient(135deg, #05080f 0%, #0d0514 100%);
-        --tab-inactive: #374151;
-        --bottom-bar: #1f2937;
-        --input-bg: #374151;
-      }
+     :root {
+  /* Light Mode */
+  --bg-main: #fff7fc;
+  --bg-card: #ffffff;
+  --text-dark: #4b315f;
+
+  --border-color: #ff5fa2;
+  --shadow-color: #ffb6d5;
+
+  --hero-bg: linear-gradient(
+    135deg,
+    #ff7eb3 0%,
+    #ffb5d9 25%,
+    #9be7ff 65%,
+    #7dd3fc 100%
+  );
+
+  --tab-inactive: #ffffff;
+  --bottom-bar: rgba(255, 255, 255, 0.9);
+  --input-bg: #fff0f7;
+
+  --primary: #ff5fa2;
+  --secondary: #5edfff;
+  --accent: #ffd84d;
+
+  --btn-plus: #42d392;
+  --btn-minus: #ff6b81;
+}
+     body.dark-mode {
+  /* Dark Mode */
+  --bg-main: #161222;
+  --bg-card: #241a38;
+  --text-dark: #f9f4ff;
+
+  --border-color: #ff69b4;
+  --shadow-color: #0d0b14;
+
+  --hero-bg: linear-gradient(
+    135deg,
+    #2c163f 0%,
+    #4b1f6d 40%,
+    #16314f 100%
+  );
+
+  --tab-inactive: #302348;
+  --bottom-bar: rgba(36, 26, 56, 0.95);
+  --input-bg: #34274d;
+
+  --primary: #ff79c6;
+  --secondary: #70d6ff;
+  --accent: #ffe066;
+}
       * {
         box-sizing: border-box;
         -webkit-tap-highlight-color: transparent;
       }
       body {
-        font-family: "Nunito", sans-serif;
-        background-color: var(--bg-main);
-        color: var(--text-dark);
-        margin: 0;
-        padding-bottom: 120px;
-        background-image:
-          radial-gradient(#4ecdc4 1.5px, transparent 1.5px),
-          radial-gradient(#4ecdc4 1.5px, transparent 1.5px);
-        background-size: 30px 30px;
-        background-position:
-          0 0,
-          15px 15px;
-        background-attachment: fixed;
-        transition: 0.3s;
-      }
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(255, 95, 162, 0.15) 0%, transparent 30%),
+    radial-gradient(circle at 80% 10%, rgba(94, 223, 255, 0.15) 0%, transparent 30%),
+    radial-gradient(circle at 50% 90%, rgba(255, 216, 77, 0.12) 0%, transparent 25%);
+}
       #loader {
         position: fixed;
         top: 0;
@@ -603,75 +622,20 @@
       }
 
       const products = [
-        {
-          id: "rbx80",
-          cat: "robux",
-          game: "ROBUX",
-          name: "80 Robux",
-          price: 16000,
-        },
-        {
-          id: "rbx160",
-          cat: "robux",
-          game: "ROBUX",
-          name: "160 Robux",
-          price: 32000,
-        },
-        {
-          id: "rbx240",
-          cat: "robux",
-          game: "ROBUX",
-          name: "240 Robux",
-          price: 48000,
-        },
-        {
-          id: "rbx320",
-          cat: "robux",
-          game: "ROBUX",
-          name: "320 Robux",
-          price: 64000,
-        },
+        
         {
           id: "rbx500",
           cat: "robux",
           game: "ROBUX",
           name: "500 Robux",
-          price: 78000,
-        },
-        {
-          id: "rbx580",
-          cat: "robux",
-          game: "ROBUX",
-          name: "580 Robux",
-          price: 94000,
-        },
-        {
-          id: "rbx660",
-          cat: "robux",
-          game: "ROBUX",
-          name: "660 Robux",
-          price: 110000,
-        },
-        {
-          id: "rbx740",
-          cat: "robux",
-          game: "ROBUX",
-          name: "740 Robux",
-          price: 126000,
-        },
-        {
-          id: "rbx820",
-          cat: "robux",
-          game: "ROBUX",
-          name: "820 Robux",
-          price: 142000,
+          price: 75000,
         },
         {
           id: "rbx1000",
           cat: "robux",
           game: "ROBUX",
           name: "1000 Robux",
-          price: 155000,
+          price: 150000,
         },
         {
           id: "dds500",
