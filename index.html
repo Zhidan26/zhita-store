@@ -491,7 +491,7 @@
           💵 Uang DDS
         </button>
         <button class="tab-btn" onclick="bukaTab('sec-gp-dds', this)">
-          🎮 GP DDS
+          🏍️ GP DDS
         </button>
         <button class="tab-btn" onclick="bukaTab('sec-gp-cdid', this)">
           🚗 GP CDID
@@ -641,22 +641,69 @@
       }
 
       const products = [
-        
-        {
-          id: "rbx500",
-          cat: "robux",
-          game: "ROBUX",
-          name: "500 Robux",
-          price: 75000,
-        },
-        {
-          id: "rbx1000",
-          cat: "robux",
-          game: "ROBUX",
-          name: "1000 Robux",
-          price: 150000,
-        },
-        {
+  {
+    id: "rbx160",
+    cat: "robux",
+    game: "ROBUX",
+    name: "160 Robux",
+    price: 32000,
+  },
+  {
+    id: "rbx240",
+    cat: "robux",
+    game: "ROBUX",
+    name: "240 Robux",
+    price: 48000,
+  },
+  {
+    id: "rbx320",
+    cat: "robux",
+    game: "ROBUX",
+    name: "320 Robux",
+    price: 64000,
+  },
+  {
+    id: "rbx500",
+    cat: "robux",
+    game: "ROBUX",
+    name: "500 Robux",
+    price: 78000,
+  },
+  {
+    id: "rbx580",
+    cat: "robux",
+    game: "ROBUX",
+    name: "580 Robux",
+    price: 94000,
+  },
+  {
+    id: "rbx660",
+    cat: "robux",
+    game: "ROBUX",
+    name: "660 Robux",
+    price: 110000,
+  },
+  {
+    id: "rbx740",
+    cat: "robux",
+    game: "ROBUX",
+    name: "740 Robux",
+    price: 126000,
+  },
+  {
+    id: "rbx820",
+    cat: "robux",
+    game: "ROBUX",
+    name: "820 Robux",
+    price: 142000,
+  },
+  {
+    id: "rbx1000",
+    cat: "robux",
+    game: "ROBUX",
+    name: "1000 Robux",
+    price: 155000,
+  },{
           id: "dds500",
           cat: "uang_dds",
           game: "DDS",
@@ -863,26 +910,44 @@
       ];
 
       function render() {
-        products.forEach((p) => {
-          let cid =
-            p.cat === "robux"
-              ? "robux-container"
-              : p.cat === "uang_dds"
-                ? "uang-container"
-                : p.cat === "gp_dds"
-                  ? "gamepass-container"
-                  : "gp-cdid-container";
-          document.getElementById(cid).innerHTML += `
-            <div class="card">
-                <div><div class="card-icon">🎮</div><div class="card-title">${p.name}</div><div class="card-price">Rp ${p.price.toLocaleString("id-ID")}</div></div>
-                <div class="controls">
-                    <button class="btn-min" onclick="update('${p.id}',-1)">-</button>
-                    <div id="qty-${p.id}">0</div>
-                    <button class="btn-plus" onclick="update('${p.id}',1)">+</button>
-                </div>
-            </div>`;
-        });
-      }
+  products.forEach((p) => {
+    let cid =
+      p.cat === "robux"
+        ? "robux-container"
+        : p.cat === "uang_dds"
+        ? "uang-container"
+        : p.cat === "gp_dds"
+        ? "gamepass-container"
+        : "gp-cdid-container";
+
+    let icon =
+      p.cat === "robux"
+        ? "💎"
+        : p.cat === "uang_dds"
+        ? "💵"
+        : p.cat === "gp_dds"
+        ? "🏍️"
+        : "🚗";
+
+    document.getElementById(cid).innerHTML += `
+      <div class="card">
+        <div>
+          <div class="card-icon">${icon}</div>
+          <div class="card-title">${p.name}</div>
+          <div class="card-price">
+            Rp ${p.price.toLocaleString("id-ID")}
+          </div>
+        </div>
+
+        <div class="controls">
+          <button class="btn-min" onclick="update('${p.id}',-1)">-</button>
+          <div id="qty-${p.id}">0</div>
+          <button class="btn-plus" onclick="update('${p.id}',1)">+</button>
+        </div>
+      </div>
+    `;
+  });
+}
       render();
 
       let cart = {};
