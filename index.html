@@ -5,76 +5,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Zhita Store - Top Up & Gamepass</title>
     <link
-      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
-     :root {
-  /* Light Mode */
-  --bg-main: #fff7fc;
-  --bg-card: #ffffff;
-  --text-dark: #4b315f;
+      :root {
+        /* Light Mode */
+        --bg-main: #f8f9fa;
+        --bg-card: #ffffff;
+        --text-dark: #2d3436;
 
-  --border-color: #ff5fa2;
-  --shadow-color: #ffb6d5;
+        --border-color: #2d3436;
+        --shadow-color: #2d3436;
 
-  --hero-bg: linear-gradient(
-    135deg,
-    #ff7eb3 0%,
-    #ffb5d9 25%,
-    #9be7ff 65%,
-    #7dd3fc 100%
-  );
+        --hero-bg: linear-gradient(135deg, #ff7eb3 0%, #ff758c 100%);
+        --hero-text: #ffffff;
 
-  --tab-inactive: #ffffff;
-  --bottom-bar: rgba(255, 255, 255, 0.9);
-  --input-bg: #fff0f7;
+        --tab-inactive: #ffffff;
+        --bottom-bar: rgba(255, 255, 255, 0.85);
+        --input-bg: #ffffff;
 
-  --primary: #ff5fa2;
-  --secondary: #5edfff;
-  --accent: #ffd84d;
+        --primary: #ff5fa2;
+        --secondary: #5edfff;
+        --accent: #ffd84d;
 
-  --btn-plus: #42d392;
-  --btn-minus: #ff6b81;
-}
-     body.dark-mode {
-  /* Dark Mode */
-  --bg-main: #161222;
-  --bg-card: #241a38;
-  --text-dark: #f9f4ff;
+        --btn-plus: #00b894;
+        --btn-minus: #ff7675;
+      }
 
-  --border-color: #ff69b4;
-  --shadow-color: #0d0b14;
+      body.dark-mode {
+        /* Dark Mode */
+        --bg-main: #0f0c20;
+        --bg-card: #1e1936;
+        --text-dark: #f1f2f6;
 
-  --hero-bg: linear-gradient(
-    135deg,
-    #2c163f 0%,
-    #4b1f6d 40%,
-    #16314f 100%
-  );
+        --border-color: #9c88ff;
+        --shadow-color: #000000;
 
-  --tab-inactive: #302348;
-  --bottom-bar: rgba(36, 26, 56, 0.95);
-  --input-bg: #34274d;
+        --hero-bg: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+        --hero-text: #ffffff;
 
-  --primary: #ff79c6;
-  --secondary: #70d6ff;
-  --accent: #ffe066;
-}
+        --tab-inactive: #2d244c;
+        --bottom-bar: rgba(30, 25, 54, 0.85);
+        --input-bg: #2d244c;
+
+        --primary: #ff79c6;
+        --secondary: #70d6ff;
+        --accent: #feca57;
+      }
+
       * {
         box-sizing: border-box;
         -webkit-tap-highlight-color: transparent;
+        margin: 0;
+        padding: 0;
       }
-      body {
-  background-color: var(--bg-main);
-  color: var(--text-dark);
 
-  background-image:
-    radial-gradient(circle at 20% 20%, rgba(255, 95, 162, 0.15) 0%, transparent 30%),
-    radial-gradient(circle at 80% 10%, rgba(94, 223, 255, 0.15) 0%, transparent 30%),
-    radial-gradient(circle at 50% 90%, rgba(255, 216, 77, 0.12) 0%, transparent 25%);
-}
+      body {
+        background-color: var(--bg-main);
+        color: var(--text-dark);
+        font-family: "Nunito", sans-serif;
+        padding-bottom: 120px;
+        transition:
+          background-color 0.3s ease,
+          color 0.3s ease;
+        background-image:
+          radial-gradient(
+            circle at 10% 20%,
+            rgba(255, 95, 162, 0.05) 0%,
+            transparent 40%
+          ),
+          radial-gradient(
+            circle at 90% 80%,
+            rgba(94, 223, 255, 0.05) 0%,
+            transparent 40%
+          );
+        background-attachment: fixed;
+      }
+
+      /* Loader */
       #loader {
         position: fixed;
         top: 0;
@@ -86,103 +96,176 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        transition: 0.5s;
+        transition:
+          opacity 0.5s ease,
+          visibility 0.5s;
       }
       #loader img {
-        width: 150px;
-        border-radius: 20px;
-        border: 4px solid #ffffff;
-        animation: pulseLogo 1s infinite alternate;
+        width: 120px;
+        border-radius: 25px;
+        border: 4px solid rgba(255, 255, 255, 0.5);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        animation: pulseLogo 1.5s infinite alternate
+          cubic-bezier(0.4, 0, 0.2, 1);
       }
       @keyframes pulseLogo {
         0% {
-          transform: scale(0.9);
+          transform: scale(0.95);
+          box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.4);
         }
         100% {
-          transform: scale(1.1);
+          transform: scale(1.05);
+          box-shadow: 0 0 20px 10px rgba(255, 255, 255, 0);
         }
       }
+
+      /* Fake Alert Toast */
       #fake-alert {
         position: fixed;
-        bottom: 100px;
-        left: -350px;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-150px);
         background: var(--bg-card);
-        border: 3px solid var(--border-color);
-        padding: 10px 15px;
-        border-radius: 15px;
+        border: 2px solid var(--border-color);
+        padding: 12px 20px;
+        border-radius: 50px;
         display: flex;
         align-items: center;
-        gap: 10px;
+        gap: 12px;
         z-index: 2000;
-        box-shadow: 4px 4px 0px var(--shadow-color);
-        transition: 0.5s ease;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        min-width: 300px;
+        justify-content: center;
       }
       #fake-alert.show {
-        left: 15px;
+        transform: translateX(-50%) translateY(0);
+      }
+      #alert-content {
+        font-size: 0.9em;
       }
 
+      /* Hero Section */
       .hero {
         position: relative;
         text-align: center;
-        padding: 60px 20px 40px 20px;
+        padding: 50px 20px 40px;
         background: var(--hero-bg);
-        border-bottom: 5px solid #8a2be2;
-        border-radius: 0 0 30px 30px;
-        margin-bottom: 15px;
-        box-shadow: 0 10px 30px rgba(138, 43, 226, 0.3);
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+        margin-bottom: 25px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
         overflow: hidden;
       }
+      .hero::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml;utf8,<svg width="20" height="20" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="2" fill="rgba(255,255,255,0.1)"/></svg>');
+        opacity: 0.5;
+      }
       .store-logo {
-        max-width: 250px;
+        max-width: 160px;
         width: 100%;
-        margin: 0 auto 15px auto;
+        margin: 0 auto 15px;
         display: block;
         border-radius: 50%;
-        box-shadow: 0 0 40px rgba(138, 43, 226, 0.4);
+        border: 4px solid rgba(255, 255, 255, 0.8);
+        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
         position: relative;
         z-index: 2;
+        transition: transform 0.3s ease;
+      }
+      .store-logo:hover {
+        transform: scale(1.05) rotate(-3deg);
       }
       .hero p {
-        color: #ffffff;
+        color: var(--hero-text);
+        font-family: "Fredoka", sans-serif;
         font-size: 1.1em;
-        font-weight: 800;
-        background: rgba(138, 43, 226, 0.2);
+        font-weight: 600;
+        background: rgba(255, 255, 255, 0.2);
         display: inline-block;
-        padding: 8px 30px;
+        padding: 8px 25px;
         border-radius: 30px;
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        backdrop-filter: blur(5px);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        backdrop-filter: blur(10px);
         position: relative;
         z-index: 2;
+        letter-spacing: 0.5px;
       }
 
+      /* Theme Toggle */
+      .theme-btn {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.4);
+        color: white;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        font-size: 1.2em;
+        cursor: pointer;
+        z-index: 10;
+        backdrop-filter: blur(5px);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: all 0.3s ease;
+      }
+      .theme-btn:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(15deg);
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+
+      /* Testimonials */
       .testi-container {
-        margin: 20px 0;
-        padding: 0 15px;
+        margin: 10px 0 30px;
       }
       .testi-title {
         font-family: "Fredoka";
         font-size: 1.2em;
-        margin-bottom: 10px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
       }
       .testi-wrapper {
         display: flex;
-        gap: 12px;
+        gap: 15px;
         overflow-x: auto;
-        padding-bottom: 10px;
+        padding: 5px 5px 15px;
         scrollbar-width: none;
         scroll-behavior: smooth;
       }
+      .testi-wrapper::-webkit-scrollbar {
+        display: none;
+      }
       .testi-card {
-        min-width: 140px;
-        height: 200px;
+        min-width: 130px;
+        height: 180px;
         background: var(--bg-card);
-        border-radius: 12px;
+        border-radius: 16px;
         border: 2px solid var(--border-color);
         overflow: hidden;
         flex-shrink: 0;
-        box-shadow: 3px 3px 0px var(--shadow-color);
+        box-shadow: 4px 4px 0px var(--shadow-color);
         position: relative;
+        transition: transform 0.2s ease;
+      }
+      .testi-card:hover {
+        transform: translateY(-5px);
       }
       .testi-card img {
         width: 100%;
@@ -194,68 +277,93 @@
         bottom: 0;
         left: 0;
         width: 100%;
-        background: rgba(0, 0, 0, 0.7);
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
         color: #fff;
-        font-size: 0.8em;
-        padding: 6px 0;
+        font-size: 0.85em;
+        padding: 15px 10px 8px;
         text-align: center;
         font-family: "Fredoka";
-        backdrop-filter: blur(3px);
+        font-weight: 500;
       }
 
-      .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 0 15px;
+      /* Custom Image Classes */
+      .tab-icon {
+        width: 20px;
+        vertical-align: middle;
+        margin-right: 5px;
+      }
+      .robux-img {
+        width: 50px;
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.15));
+      }
+      .pay-img {
+        height: 24px;
+        vertical-align: middle;
+        object-fit: contain;
       }
 
+      /* Tabs */
       .tabs {
         position: sticky;
-        top: 0;
+        top: 15px;
         z-index: 100;
-        background-color: var(--bg-main);
+        background: var(--bg-main);
         display: flex;
-        gap: 10px;
+        gap: 12px;
         margin-bottom: 25px;
         overflow-x: auto;
-        padding: 15px 5px 15px 5px;
+        padding: 10px;
+        border-radius: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         scrollbar-width: none;
-        transition: 0.3s;
+        border: 2px solid var(--border-color);
+      }
+      .tabs::-webkit-scrollbar {
+        display: none;
       }
       .tab-btn {
         background: var(--tab-inactive);
         color: var(--text-dark);
-        border: 3px solid var(--border-color);
-        padding: 10px 15px;
-        border-radius: 20px;
+        border: 2px solid var(--border-color);
+        padding: 12px 20px;
+        border-radius: 12px;
         font-family: "Fredoka";
+        font-weight: 600;
         cursor: pointer;
         box-shadow: 3px 3px 0px var(--shadow-color);
-        transition: 0.2s;
+        transition: all 0.2s ease;
         white-space: nowrap;
+        display: flex;
+        align-items: center;
+      }
+      .tab-btn:hover {
+        transform: translate(-2px, -2px);
+        box-shadow: 5px 5px 0px var(--shadow-color);
       }
       .tab-btn.active {
         background: var(--accent);
-        color: #2d3436;
-        transform: translate(2px, 2px);
-        box-shadow: none;
+        color: #000;
+        transform: translate(3px, 3px);
+        box-shadow: 0px 0px 0px var(--shadow-color);
+        border-color: #000;
       }
 
+      /* Products */
       .category-section {
         display: none;
-        animation: fadeIn 0.4s ease;
+        animation: fadeScale 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       }
       .category-section.active {
         display: block;
       }
-      @keyframes fadeIn {
-        from {
+      @keyframes fadeScale {
+        0% {
           opacity: 0;
-          transform: translateY(10px);
+          transform: scale(0.95) translateY(10px);
         }
-        to {
+        100% {
           opacity: 1;
-          transform: translateY(0);
+          transform: scale(1) translateY(0);
         }
       }
 
@@ -273,47 +381,82 @@
 
       .card {
         background: var(--bg-card);
-        border: 3px solid var(--border-color);
-        border-radius: 20px;
+        border: 2px solid var(--border-color);
+        border-radius: 18px;
         padding: 15px;
         text-align: center;
         box-shadow: 4px 4px 0px var(--shadow-color);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        transition: all 0.2s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 6px 8px 0px var(--shadow-color);
+      }
+      .card-icon {
+        font-size: 2.5em;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 50px;
       }
       .card-title {
         font-family: "Fredoka";
-        font-size: 1.05em;
-        margin: 5px 0;
+        font-size: 1.1em;
+        font-weight: 600;
+        margin-bottom: 8px;
+        line-height: 1.2;
       }
       .card-price {
         font-size: 0.95em;
-        color: #ff4757;
+        color: #000;
         font-weight: 800;
         background: var(--accent);
-        padding: 3px 8px;
-        border-radius: 10px;
-        border: 2px solid #2d3436;
-        margin-bottom: 10px;
+        display: inline-block;
+        padding: 6px 12px;
+        border-radius: 20px;
+        border: 2px solid #000;
+        margin-bottom: 15px;
+        box-shadow: 2px 2px 0px #000;
       }
+
+      /* Quantity Controls */
       .controls {
         display: flex;
         justify-content: space-between;
         align-items: center;
         background: var(--input-bg);
         border-radius: 12px;
-        padding: 5px;
+        padding: 6px;
         border: 2px solid var(--border-color);
       }
       .controls button {
         color: white;
-        border: 2px solid #2d3436;
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
+        border: 2px solid rgba(0, 0, 0, 0.2);
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        font-size: 1.2em;
         font-weight: bold;
         cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition:
+          transform 0.1s,
+          filter 0.2s;
+      }
+      .controls button:active {
+        transform: scale(0.9);
+      }
+      .controls button:hover {
+        filter: brightness(1.1);
       }
       .btn-min {
         background: var(--btn-minus);
@@ -321,160 +464,198 @@
       .btn-plus {
         background: var(--btn-plus);
       }
+      .qty-display {
+        font-family: "Fredoka";
+        font-size: 1.2em;
+        font-weight: 600;
+        width: 30px;
+      }
 
+      /* Forms */
       .account-form {
         display: none;
         background: var(--bg-card);
-        padding: 25px 20px;
-        border-radius: 20px;
-        border: 4px solid var(--border-color);
-        margin-top: 30px;
+        padding: 30px 25px;
+        border-radius: 25px;
+        border: 2px solid var(--border-color);
+        margin-top: 40px;
         box-shadow: 6px 6px 0px var(--shadow-color);
+        animation: fadeScale 0.4s ease;
       }
       .account-form input {
         width: 100%;
         background: var(--input-bg);
-        border: 3px solid var(--border-color);
+        border: 2px solid var(--border-color);
         color: var(--text-dark);
-        padding: 12px;
-        margin-bottom: 10px;
-        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 15px;
+        border-radius: 12px;
         outline: none;
         font-family: "Nunito", sans-serif;
+        font-size: 1em;
+        transition: all 0.3s ease;
+        box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+      }
+      .account-form input:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(255, 95, 162, 0.2);
       }
 
-      /* GAYA BARU UNTUK PILIHAN ADMIN (RADIO BUTTON KARTU) */
-     .admin-selection-wrapper {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  margin-bottom: 15px;
-  align-items: stretch;
-}
-      .admin-radio {
-        flex: 1;
+      /* Radio Button Box Styles */
+      .radio-selection-wrapper {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+        margin-bottom: 20px;
+        margin-top: 10px;
+      }
+      .radio-btn-custom {
         cursor: pointer;
+        display: block;
       }
-      .admin-radio input {
-        display: none; /* Sembunyikan bulatan radio aslinya */
+      .radio-btn-custom input {
+        display: none;
       }
-      .admin-box {
+      .radio-box {
         background: var(--input-bg);
-        border: 3px solid var(--border-color);
-        border-radius: 10px;
-        padding: 12px 5px;
+        border: 2px solid var(--border-color);
+        border-radius: 12px;
+        padding: 15px 10px;
         text-align: center;
         font-family: "Fredoka", sans-serif;
-        font-size: 0.95em;
+        font-size: 1em;
         font-weight: 600;
         color: var(--text-dark);
-        transition: all 0.2s ease;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 3px 3px 0px var(--shadow-color);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
       }
-      /* Efek ketika Admin dipilih */
-      .admin-radio input:checked + .admin-box {
+      .radio-btn-custom input:checked + .radio-box {
         background: var(--accent);
-        transform: translateY(-3px);
-        box-shadow: 4px 4px 0px var(--shadow-color);
-        border-color: #2d3436;
+        color: #000;
+        transform: translate(3px, 3px);
+        box-shadow: 0px 0px 0px var(--shadow-color);
+        border-color: #000;
       }
 
+      /* Bottom Bar */
       .bottom-bar {
         position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 40px);
+        max-width: 860px;
         background: var(--bottom-bar);
-        border-top: 4px solid var(--border-color);
-        padding: 15px 20px;
+        backdrop-filter: blur(15px);
+        border: 2px solid var(--border-color);
+        padding: 15px 25px;
+        border-radius: 25px;
         display: flex;
         justify-content: space-between;
         align-items: center;
         z-index: 1000;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       }
       .bottom-price {
-        color: #ff4757;
+        color: var(--primary);
         font-family: "Fredoka";
-        font-size: 1.5em;
+        font-size: 1.6em;
+        font-weight: 700;
+        line-height: 1.1;
       }
       .btn-order {
-        background: var(--accent);
-        color: #2d3436;
-        border: 3px solid #2d3436;
-        padding: 12px 20px;
+        background: var(--primary);
+        color: #fff;
+        border: none;
+        padding: 15px 35px;
         border-radius: 15px;
         font-family: "Fredoka";
+        font-size: 1.1em;
+        font-weight: 600;
         cursor: pointer;
-        box-shadow: 4px 4px 0px #2d3436;
+        box-shadow: 0 6px 15px rgba(255, 95, 162, 0.4);
+        transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .btn-order:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(255, 95, 162, 0.5);
+      }
+      .btn-order:active {
+        transform: translateY(2px);
+        box-shadow: 0 2px 10px rgba(255, 95, 162, 0.4);
       }
 
+      /* SweetAlert Overrides */
       .swal2-popup {
         font-family: "Nunito", sans-serif !important;
-        border-radius: 20px !important;
-        border: 3px solid #2d3436 !important;
-        box-shadow: 6px 6px 0px #2d3436 !important;
+        border-radius: 25px !important;
+        border: 2px solid var(--border-color) !important;
+        background: var(--bg-card) !important;
+        color: var(--text-dark) !important;
+      }
+      .swal2-title {
+        font-family: "Fredoka", sans-serif !important;
       }
       .swal2-confirm {
         font-family: "Fredoka", sans-serif !important;
-        border-radius: 10px !important;
-        border: 2px solid #2d3436 !important;
+        border-radius: 12px !important;
+        padding: 12px 30px !important;
+        font-weight: 600 !important;
       }
-
-      body {
-  padding-bottom: 200px;
-}
-
-.account-form {
-  margin-bottom: 120px;
-}
-
-@media (max-width: 480px) {
-  body {
-    padding-bottom: 240px;
-  }
-
-  .account-form {
-    margin-bottom: 150px;
-  }
-}
     </style>
-
   </head>
   <body>
-    <div id="loader"><img src="logo.png" /></div>
+    <!-- Loader -->
+    <div id="loader">
+      <img
+        src="logo.png"
+        alt="Loading"
+        onerror="
+          this.src = 'https://placehold.co/120x120/ff5fa2/ffffff?text=ZHITA'
+        "
+      />
+    </div>
+
+    <!-- Toast Alert -->
     <div id="fake-alert">
-      <div style="font-size: 1.5em">🛒</div>
+      <div style="font-size: 1.5em">🛍️</div>
       <div id="alert-content"></div>
     </div>
 
+    <!-- Hero -->
     <div class="hero">
-      <button
-        onclick="toggleTheme()"
-        style="
-          position: absolute;
-          top: 15px;
-          right: 15px;
-          background: none;
-          border: none;
-          color: white;
-          font-size: 1.5em;
-          cursor: pointer;
-        "
-      >
+      <button class="theme-btn" onclick="toggleTheme()" id="themeIcon">
         🌙
       </button>
-      <img src="logo.png" class="store-logo" />
+      <img
+        src="logo.png"
+        class="store-logo"
+        alt="Zhita Store"
+        onerror="
+          this.src =
+            'https://placehold.co/160x160/ff5fa2/ffffff?text=ZHITA+STORE'
+        "
+      />
       <p>✨ Top Up Termurah & Tercepat! ✨</p>
     </div>
 
     <div class="container">
+      <!-- Testimonials -->
       <div class="testi-container">
-        <div class="testi-title">⭐ Testimoni Zhita Store</div>
+        <div class="testi-title">⭐ Testimoni Terpercaya</div>
         <div class="testi-wrapper" id="testiSlider">
           <script>
-            for (let i = 1; i <= 20; i++) {
+            for (let i = 1; i <= 10; i++) {
               document.write(
                 `<div class="testi-card">
-                  <img src="testi${i}.jpg" onerror="this.src='https://placehold.co/150x200/cccccc/2d3436?text=Testi+${i}'" />
+                  <img src="testi${i}.jpg" onerror="this.src='https://placehold.co/130x180/cccccc/2d3436?text=Testi+${i}'" />
                   <div class="testi-caption">Sukses #${i}</div>
                 </div>`,
               );
@@ -483,9 +664,10 @@
         </div>
       </div>
 
+      <!-- Navigation Tabs -->
       <div class="tabs">
         <button class="tab-btn active" onclick="bukaTab('sec-robux', this)">
-          💎 Robux
+          <img src="robux.png" class="tab-icon" alt="Robux" /> Robux
         </button>
         <button class="tab-btn" onclick="bukaTab('sec-uang', this)">
           💵 Uang DDS
@@ -498,6 +680,7 @@
         </button>
       </div>
 
+      <!-- Categories -->
       <div id="sec-robux" class="category-section active">
         <div class="product-grid" id="robux-container"></div>
       </div>
@@ -511,89 +694,169 @@
         <div class="product-grid" id="gp-cdid-container"></div>
       </div>
 
+      <!-- Checkout Form -->
       <div class="account-form" id="account-section">
-        <div
+        <h3
           id="form-title"
-          style="font-family: &quot;Fredoka&quot;; margin-bottom: 10px"
+          style="
+            font-family: &quot;Fredoka&quot;;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            text-align: center;
+          "
         >
-          Data Akun Kamu
-        </div>
-        <input type="text" id="roblox-user" placeholder="Username Roblox" />
-        <input type="text" id="roblox-pass" placeholder="Password Roblox" />
+          🔐 Data Akun Kamu
+        </h3>
 
+        <input
+          type="text"
+          id="roblox-user"
+          placeholder="Masukkan Username Roblox"
+          autocomplete="off"
+        />
+        <input
+          type="text"
+          id="roblox-pass"
+          placeholder="Masukkan Password Roblox"
+          autocomplete="off"
+        />
+
+        <!-- Pilihan Admin (Hanya muncul jika bukan Robux) -->
         <div id="admin-select-container" style="display: none">
           <div
             style="
               font-family: &quot;Nunito&quot;;
-              font-size: 0.9em;
+              font-size: 0.95em;
               font-weight: 700;
-              margin-bottom: 8px;
               color: var(--text-dark);
             "
           >
-            Pilih Admin Gamepass:
-         <div class="admin-selection-wrapper">
-  <label class="admin-radio">
-    <input type="radio" name="admin" value="6281316773951" checked />
-    <div class="admin-box">👨‍💻 Admin 1</div>
-  </label>
+            Pilih Admin Transaksi:
+          </div>
+          <div class="radio-selection-wrapper">
+            <label class="radio-btn-custom">
+              <input type="radio" name="admin" value="6281316773951" checked />
+              <div class="radio-box">👨‍💻 Admin 1</div>
+            </label>
+            <label class="radio-btn-custom">
+              <input type="radio" name="admin" value="6285284209386" />
+              <div class="radio-box">👩‍💻 Admin 2</div>
+            </label>
+          </div>
+        </div>
 
-  <label class="admin-radio">
-    <input type="radio" name="admin" value="6285284209386" />
-    <div class="admin-box">👩‍💻 Admin 2</div>
-  </label>
-
-  
-</div>
-
+        <!-- Pilihan Metode Pembayaran (Muncul disemua checkout) -->
+        <div id="payment-select-container">
+          <div
+            style="
+              font-family: &quot;Nunito&quot;;
+              font-size: 0.95em;
+              font-weight: 700;
+              color: var(--text-dark);
+            "
+          >
+            Pilih Metode Pembayaran:
+          </div>
+          <div class="radio-selection-wrapper">
+            <label class="radio-btn-custom">
+              <input type="radio" name="payment" value="DANA" checked />
+              <div class="radio-box">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/7/72/Logo_dana_blue.svg"
+                  alt="DANA"
+                  class="pay-img"
+                  onerror="this.src = 'dana.png'"
+                />
+              </div>
+            </label>
+            <label class="radio-btn-custom">
+              <input type="radio" name="payment" value="QRIS" />
+              <div class="radio-box">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_QRIS.svg"
+                  alt="QRIS"
+                  class="pay-img"
+                  style="
+                    background: #ffffff;
+                    padding: 3px 6px;
+                    border-radius: 6px;
+                  "
+                  onerror="this.src = 'qris.png'"
+                />
+              </div>
+            </label>
+          </div>
+        </div>
 
         <p
           id="form-note"
           style="
-            font-size: 0.8em;
-            color: #ff4757;
-            font-weight: 800;
+            font-size: 0.85em;
+            color: #d63031;
+            font-weight: 700;
             text-align: center;
-            background: #ffcccc;
-            padding: 5px;
-            border-radius: 5px;
+            background: rgba(214, 48, 49, 0.1);
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            display: none;
           "
         >
-          
+          ⚠️ Pastikan data akun yang dimasukkan sudah benar!
         </p>
       </div>
     </div>
 
+    <!-- Bottom Action Bar -->
     <div class="bottom-bar">
       <div>
-        <small style="font-family: &quot;Fredoka&quot;">TOTAL</small>
+        <small
+          style="
+            font-family: &quot;Fredoka&quot;;
+            font-weight: 600;
+            opacity: 0.8;
+          "
+          >TOTAL BAYAR</small
+        >
         <div class="bottom-price">Rp <span id="total-price">0</span></div>
       </div>
-      <button class="btn-order" onclick="orderWhatsApp()">🛒 BELI</button>
+      <button class="btn-order" onclick="orderWhatsApp()">🛒 Checkout</button>
     </div>
 
     <script>
-      window.addEventListener("load", () => {
-        setTimeout(() => {
-          document.getElementById("loader").style.opacity = "0";
-          setTimeout(
-            () => (document.getElementById("loader").style.display = "none"),
-            500,
-          );
-        }, 1000);
+      // Loader Logic
+      function hideLoader() {
+        const loader = document.getElementById("loader");
+        if (loader && loader.style.display !== "none") {
+          loader.style.opacity = "0";
+          setTimeout(() => (loader.style.display = "none"), 500);
+        }
+      }
+      window.addEventListener("DOMContentLoaded", () => {
+        setTimeout(hideLoader, 1000);
       });
+      setTimeout(hideLoader, 2000);
 
+      // Dark/Light Mode Toggle
       function toggleTheme() {
         document.body.classList.toggle("dark-mode");
+        const btn = document.getElementById("themeIcon");
+        btn.innerHTML = document.body.classList.contains("dark-mode")
+          ? "☀️"
+          : "🌙";
       }
 
+      // Auto Slider Testimoni
       const slider = document.getElementById("testiSlider");
       setInterval(() => {
-        if (slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth)
-          slider.scrollLeft = 0;
-        else slider.scrollLeft += 150;
-      }, 3000);
+        if (slider.scrollLeft + slider.offsetWidth >= slider.scrollWidth) {
+          slider.scrollTo({ left: 0, behavior: "smooth" });
+        } else {
+          slider.scrollBy({ left: 150, behavior: "smooth" });
+        }
+      }, 3500);
 
+      // Fake Notification Setup
       const names = [
         "Zhidan",
         "Lita",
@@ -611,20 +874,27 @@
       const items_fake = [
         "80 Robux",
         "1000 Robux",
-        "Uang 500 Juta",
+        "Uang 500 Juta DDS",
         "Police Pass",
-        "Luxury Car",
+        "Luxury Car CDID",
       ];
 
       function showFake() {
-        const alert = document.getElementById("fake-alert");
-        document.getElementById("alert-content").innerHTML =
-          `<b>${names[Math.floor(Math.random() * names.length)]}</b> baru saja membeli<br>${items_fake[Math.floor(Math.random() * items_fake.length)]}`;
-        alert.classList.add("show");
-        setTimeout(() => alert.classList.remove("show"), 4000);
-      }
-      setInterval(showFake, 10000);
+        const alertBox = document.getElementById("fake-alert");
+        const randomName = names[Math.floor(Math.random() * names.length)];
+        const randomItem =
+          items_fake[Math.floor(Math.random() * items_fake.length)];
 
+        document.getElementById("alert-content").innerHTML =
+          `<b>${randomName}</b> baru saja membeli<br><span style="color:var(--primary); font-weight:700;">${randomItem}</span>`;
+        alertBox.classList.add("show");
+
+        setTimeout(() => alertBox.classList.remove("show"), 4000);
+      }
+      setTimeout(showFake, 3000);
+      setInterval(showFake, 12000);
+
+      // Tab Switcher
       function bukaTab(tabId, btn) {
         document
           .querySelectorAll(".category-section")
@@ -632,78 +902,83 @@
         document
           .querySelectorAll(".tab-btn")
           .forEach((el) => el.classList.remove("active"));
+
         document.getElementById(tabId).classList.add("active");
         btn.classList.add("active");
+
         window.scrollTo({
-          top: document.querySelector(".tabs").offsetTop - 10,
+          top: document.querySelector(".tabs").offsetTop - 20,
           behavior: "smooth",
         });
       }
 
+      // Product Data Lengkap
       const products = [
-  {
-    id: "rbx160",
-    cat: "robux",
-    game: "ROBUX",
-    name: "160 Robux",
-    price: 32000,
-  },
-  {
-    id: "rbx240",
-    cat: "robux",
-    game: "ROBUX",
-    name: "240 Robux",
-    price: 48000,
-  },
-  {
-    id: "rbx320",
-    cat: "robux",
-    game: "ROBUX",
-    name: "320 Robux",
-    price: 64000,
-  },
-  {
-    id: "rbx500",
-    cat: "robux",
-    game: "ROBUX",
-    name: "500 Robux",
-    price: 78000,
-  },
-  {
-    id: "rbx580",
-    cat: "robux",
-    game: "ROBUX",
-    name: "580 Robux",
-    price: 94000,
-  },
-  {
-    id: "rbx660",
-    cat: "robux",
-    game: "ROBUX",
-    name: "660 Robux",
-    price: 110000,
-  },
-  {
-    id: "rbx740",
-    cat: "robux",
-    game: "ROBUX",
-    name: "740 Robux",
-    price: 126000,
-  },
-  {
-    id: "rbx820",
-    cat: "robux",
-    game: "ROBUX",
-    name: "820 Robux",
-    price: 142000,
-  },
-  {
-    id: "rbx1000",
-    cat: "robux",
-    game: "ROBUX",
-    name: "1000 Robux",
-    price: 155000,
-  },{
+        {
+          id: "rbx160",
+          cat: "robux",
+          game: "ROBUX",
+          name: "160 Robux",
+          price: 32000,
+        },
+        {
+          id: "rbx240",
+          cat: "robux",
+          game: "ROBUX",
+          name: "240 Robux",
+          price: 48000,
+        },
+        {
+          id: "rbx320",
+          cat: "robux",
+          game: "ROBUX",
+          name: "320 Robux",
+          price: 64000,
+        },
+        {
+          id: "rbx500",
+          cat: "robux",
+          game: "ROBUX",
+          name: "500 Robux",
+          price: 78000,
+        },
+        {
+          id: "rbx580",
+          cat: "robux",
+          game: "ROBUX",
+          name: "580 Robux",
+          price: 94000,
+        },
+        {
+          id: "rbx660",
+          cat: "robux",
+          game: "ROBUX",
+          name: "660 Robux",
+          price: 110000,
+        },
+        {
+          id: "rbx740",
+          cat: "robux",
+          game: "ROBUX",
+          name: "740 Robux",
+          price: 126000,
+        },
+        {
+          id: "rbx820",
+          cat: "robux",
+          game: "ROBUX",
+          name: "820 Robux",
+          price: 142000,
+        },
+        {
+          id: "rbx1000",
+          cat: "robux",
+          game: "ROBUX",
+          name: "1000 Robux",
+          price: 155000,
+        },
+
+        {
           id: "dds500",
           cat: "uang_dds",
           game: "DDS",
@@ -731,6 +1006,7 @@
           name: "Uang 10 Juta",
           price: 5000,
         },
+
         {
           id: "gp_pay",
           cat: "gp_dds",
@@ -819,6 +1095,7 @@
           name: "Radio",
           price: 5000,
         },
+
         {
           id: "cdid_ear",
           cat: "gp_cdid",
@@ -909,47 +1186,46 @@
         },
       ];
 
+      // Render Products
       function render() {
-  products.forEach((p) => {
-    let cid =
-      p.cat === "robux"
-        ? "robux-container"
-        : p.cat === "uang_dds"
-        ? "uang-container"
-        : p.cat === "gp_dds"
-        ? "gamepass-container"
-        : "gp-cdid-container";
+        products.forEach((p) => {
+          let cid =
+            p.cat === "robux"
+              ? "robux-container"
+              : p.cat === "uang_dds"
+                ? "uang-container"
+                : p.cat === "gp_dds"
+                  ? "gamepass-container"
+                  : "gp-cdid-container";
 
-    let icon =
-      p.cat === "robux"
-        ? "💎"
-        : p.cat === "uang_dds"
-        ? "💵"
-        : p.cat === "gp_dds"
-        ? "🏍️"
-        : "🚗";
+          let icon =
+            p.cat === "robux"
+              ? `<img src="robux.png" class="robux-img" alt="Robux" />`
+              : p.cat === "uang_dds"
+                ? "💵"
+                : p.cat === "gp_dds"
+                  ? "🏍️"
+                  : "🚗";
 
-    document.getElementById(cid).innerHTML += `
-      <div class="card">
-        <div>
-          <div class="card-icon">${icon}</div>
-          <div class="card-title">${p.name}</div>
-          <div class="card-price">
-            Rp ${p.price.toLocaleString("id-ID")}
-          </div>
-        </div>
-
-        <div class="controls">
-          <button class="btn-min" onclick="update('${p.id}',-1)">-</button>
-          <div id="qty-${p.id}">0</div>
-          <button class="btn-plus" onclick="update('${p.id}',1)">+</button>
-        </div>
-      </div>
-    `;
-  });
-}
+          document.getElementById(cid).innerHTML += `
+            <div class="card">
+              <div>
+                <div class="card-icon">${icon}</div>
+                <div class="card-title">${p.name}</div>
+                <div class="card-price">Rp ${p.price.toLocaleString("id-ID")}</div>
+              </div>
+              <div class="controls">
+                <button class="btn-min" onclick="update('${p.id}',-1)">-</button>
+                <div class="qty-display" id="qty-${p.id}">0</div>
+                <button class="btn-plus" onclick="update('${p.id}',1)">+</button>
+              </div>
+            </div>
+          `;
+        });
+      }
       render();
 
+      // Cart System
       let cart = {};
       let total = 0;
 
@@ -957,9 +1233,11 @@
         let p = products.find((x) => x.id === id);
         let cur = cart[id] ? cart[id].qty : 0;
         let next = cur + chg;
+
         if (next < 0 || (p.isGp && next > 1)) return;
+
         if (next === 0) delete cart[id];
-        else
+        else {
           cart[id] = {
             name: p.name,
             qty: next,
@@ -967,11 +1245,14 @@
             game: p.game,
             cat: p.cat,
           };
+        }
 
         document.getElementById("qty-" + id).innerText = next;
+
         total = 0;
-        let hasR = false;
-        let hasO = false;
+        let hasR = false,
+          hasO = false;
+
         for (let k in cart) {
           total += cart[k].qty * cart[k].price;
           if (cart[k].cat === "robux") hasR = true;
@@ -980,32 +1261,35 @@
 
         document.getElementById("total-price").innerText =
           total.toLocaleString("id-ID");
-        document.getElementById("account-section").style.display =
-          hasR || hasO ? "block" : "none";
+
+        const accSection = document.getElementById("account-section");
+        accSection.style.display = hasR || hasO ? "block" : "none";
         document.getElementById("roblox-pass").style.display = hasR
           ? "block"
           : "none";
+        document.getElementById("form-note").style.display = hasR
+          ? "block"
+          : "none";
 
-        // Memunculkan Pilihan Admin yang baru
         document.getElementById("admin-select-container").style.display = hasO
           ? "block"
           : "none";
 
-        if (!hasR && hasO)
-          document.getElementById("form-title").innerText =
-            "🎯 Target Pengiriman (Username)";
-        else
-          document.getElementById("form-title").innerText =
-            "🔐 Data Akun Roblox";
+        const formTitle = document.getElementById("form-title");
+        if (!hasR && hasO) {
+          formTitle.innerHTML = "🎯 Target Pengiriman (Username)";
+        } else {
+          formTitle.innerHTML = "🔐 Data Akun Roblox";
+        }
       }
 
       function orderWhatsApp() {
         if (total === 0) {
           return Swal.fire({
             icon: "warning",
-            title: "Ups!",
-            text: "Pilih barang terlebih dahulu di keranjang.",
-            confirmButtonColor: "#ff6b6b",
+            title: "Keranjang Kosong",
+            text: "Silakan pilih produk yang ingin dibeli terlebih dahulu.",
+            confirmButtonColor: "var(--primary)",
           });
         }
 
@@ -1019,33 +1303,45 @@
           if (!u || !p)
             return Swal.fire({
               icon: "error",
-              title: "Data Belum Lengkap",
-              text: "Mohon isi Username dan Password Roblox untuk orderan Robux!",
-              confirmButtonColor: "#ff4757",
+              title: "Data Tidak Lengkap",
+              text: "Username dan Password Roblox wajib diisi untuk order Robux!",
+              confirmButtonColor: "#ff7675",
             });
         } else if (hasO) {
           if (!u)
             return Swal.fire({
               icon: "error",
-              title: "Data Belum Lengkap",
-              text: "Mohon isi Username Roblox target pengiriman!",
-              confirmButtonColor: "#ff4757",
+              title: "Data Tidak Lengkap",
+              text: "Masukkan Username Roblox penerima (Target Pengiriman)!",
+              confirmButtonColor: "#ff7675",
             });
         }
 
-        // Ambil nomor tujuan dari radio button yang dipilih
         let selectedAdmin = document.querySelector(
           'input[name="admin"]:checked',
+        )
+          ? document.querySelector('input[name="admin"]:checked').value
+          : "";
+        let selectedPayment = document.querySelector(
+          'input[name="payment"]:checked',
         ).value;
         let target = hasR && !hasO ? "6285837593034" : selectedAdmin;
 
-        let msg = "Halo Admin Zhita Store, order dong:\n\n";
-        for (let k in cart)
-          msg += `[${cart[k].game}] ${cart[k].name} x${cart[k].qty} (Rp ${cart[k].qty * cart[k].price})\n`;
+        // FORMAT PESAN POLOS (TANPA ICON / EMOJI) BIKIN AMAN DARI ERROR
+        let msg = "Halo Admin *Zhita Store*, saya mau order:\n\n";
+        msg += "*DETAIL PESANAN:*\n";
+
+        for (let k in cart) {
+          msg += `- [${cart[k].game}] ${cart[k].name} x${cart[k].qty} (Rp ${(cart[k].qty * cart[k].price).toLocaleString("id-ID")})\n`;
+        }
+
+        msg += "\n*DATA AKUN:*\n";
         msg += hasR
-          ? `\nLOGIN:\nUser: ${u}\nPass: ${p}`
-          : `\nKIRIM KE:\nUser: ${u}`;
-        msg += `\n\nTOTAL: Rp ${total.toLocaleString("id-ID")}`;
+          ? `Username : ${u}\nPassword : ${p}`
+          : `Kirim ke Username : ${u}`;
+
+        msg += `\n\n*PEMBAYARAN:* ${selectedPayment}`;
+        msg += `\n*TOTAL BAYAR: Rp ${total.toLocaleString("id-ID")}*`;
 
         window.open(
           "https://wa.me/" + target + "?text=" + encodeURIComponent(msg),
